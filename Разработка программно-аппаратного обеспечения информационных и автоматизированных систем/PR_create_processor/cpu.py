@@ -211,8 +211,12 @@ class CPU:
         pass
     def add(self):
         pass
-    def sub(self):
-        pass
+    
+    def sub(self): # вычитание
+        self.test_opcode(7)
+        self.test_operand()
+        value = self.read_memory(self.operand)
+        self.update_acc(self.acc - value)
     def brz(self):
         pass
     
@@ -250,6 +254,23 @@ class CPU:
             self.step()
     def halt(self):
         self.halted = True
+
+
+
+
+
+def program_iterations(cpu=None, iterations=1):
+
+    while iterations > 0:
+        cpu.step()
+        print("00    LDA  0")
+        cpu.step()
+        print("01    SUB  1")
+        cpu.step()
+        print("02    STA  3")
+        print("--- Loop ---")
+        iterations -= 1
+
 
 def main():
     time_sleep()
@@ -310,9 +331,30 @@ def main_second():
     print( color + f"MEM: {cpu.mem_data}")
 
 
-if __name__ == '__main__':
-    code= int(input('Введите какой статр начать 1 или 2'))
-    if code==1:
-        main()
-    else:
-        main_second()
+def test_main(cpu=None, iterations=1):
+
+    cpu=CPU()
+
+    cpu.memmory_programm()
+
+    cpu.reset() 
+
+    cpu.mem_data[0] = 9  # Сохраняем данные для загрузки в аккумулятор 
+    cpu.mem_data[1] = 6
+    cpu.mem_data[2] = 0
+
+    cpu.program(0, 100)     # LDA 0
+    cpu.program(1, 701)     # SUB 1
+    cpu.program(2, 203)     # STA 3
+
+    cpu.debug = True
+    program_iterations(cpu, iterations)
+
+
+test_main()
+# if __name__ == '__main__':
+#     code= int(input('Введите какой статр начать 1 или 2'))
+#     if code==1:
+#         main()
+#     else:
+#         main_second()
