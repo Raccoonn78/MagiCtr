@@ -4,11 +4,11 @@ from time import time
 import time
 import pprint
 from termcolor import colored, cprint
-from colored import fg
-from art import *
+# from colored import fg
+# from art import *
 
 def time_sleep():
-    tprint('loading__CPU')
+    # tprint('loading__CPU')
     time.sleep(1)
     print('...')
     time.sleep(1)
@@ -232,7 +232,7 @@ class CPU:
 
 
     def trace(self):
-        color = fg('white')
+        color = '1'#fg('white')
         # # Отображение процессора и памяти
         print( color + f'Opcode: {self.opcode}, Operand: {self.operand}')
         print( color + f"ACC: {self.acc}, PC: {self.pc}, Z: {self.zero_flag}, P: {self.pos_flag}")
@@ -282,6 +282,7 @@ def main():
     cpu.reset()     # Сброс должен быть вызван перед любым доступом к памяти  
     cpu.mem_data[2] = 7  # Сохраняем данные для загрузки в аккумулятор 
     cpu.mem_data[3] = 10
+
     cpu.program(0, 102)
     cpu.program(1, 201)
     cpu.program(2, 303)
@@ -323,7 +324,7 @@ def main_second():
     cpu.fetch()
     cpu.decode()   
     
-    color = fg('white')
+    color ='1' #fg('white')
         # # Отображение процессора и памяти
     print( color + f'Opcode: {cpu.opcode}, Operand: {cpu.operand}')
     print( color + f"ACC: {cpu.acc}, PC: {cpu.pc}, Z: {cpu.zero_flag}, P: {cpu.pos_flag}")
@@ -351,10 +352,10 @@ def test_main(cpu=None, iterations=1):
     program_iterations(cpu, iterations)
 
 
-test_main()
-# if __name__ == '__main__':
-#     code= int(input('Введите какой статр начать 1 или 2'))
-#     if code==1:
-#         main()
-#     else:
-#         main_second()
+# test_main()
+if __name__ == '__main__':
+    code= int(input('Введите какой статр начать 1 или 2'))
+    if code==1:
+        main()
+    else:
+        main_second()
