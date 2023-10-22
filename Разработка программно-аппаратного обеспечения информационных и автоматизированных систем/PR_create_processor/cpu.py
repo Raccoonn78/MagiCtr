@@ -4,8 +4,8 @@ from time import time
 import time
 import pprint
 from termcolor import colored, cprint
-# from colored import fg
-# from art import *
+from colored import fg
+from art import *
 
 def time_sleep():
     # tprint('loading__CPU')
@@ -111,7 +111,7 @@ class CPU:
         self.pc += 1  # переходим к следующей команде
 
 
-    def decode(self): # метод для декодирования 
+    def decode1(self): # метод для декодирования 
         """
         Проверить, находится ли значение инструкции в определенном диапазоне.
 
@@ -178,6 +178,29 @@ class CPU:
 
         # методы для выполнение команд
     
+
+    def decode(self):
+      
+        if self.instr==1:
+            self.fetch()
+            if self.instr==1:
+                self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
+                self.opcode = 1
+                self.operand = self.instr
+                self.add()
+                return
+            if self.instr==2:
+                self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
+                self.opcode = 2
+                self.operand = self.instr
+                self.max_in_list()
+                return
+        if self.instr==0:
+            self.halt()
+        else:
+            raise ValueError("Неизвестаный код операции")
+        
+
     
     def nop(self): # метод пустоты
         if not self.opcode == 0:
@@ -209,14 +232,58 @@ class CPU:
         pass
     def not_(self):
         pass
-    def add(self):
-        pass
+
+    def add(self): # сумма
+        while self.read_memory(0) != 0:
+            self.test_opcode(1) # проверка 
+            self.test_operand() # проверка 
+
+            value = self.read_memory(1) # читаем список значений из памяти 
+            all_sum= value[-(self.read_memory(0))]+self.read_memory(2) # 
+            self.write_memory(2,all_sum) 
+            self.write_memory(0,self.read_memory(0)-1)
+            # получаем из нулевой ячкйки памяти значение (кол-во элементов )
+            # получаем список чесиле
+            # суммируем значение которое лежит в ячейки пяти три , с число 
+            # так как в ячейки два лежит список, и нам нужно понимать какой элемент мы суммируем
+            # то мы дуем уменьшать число в нулевой ячейки для того чтобы поремещатться по массиму 
+            # и забирать из него значения
+            # дальше просто уменьшаем кол-во элементов в первой ячейки данные на 1 
+            # и перезаписываем ее обратно, а сумму записываем в ячейку три  
+            #
+
+            
+         # заканчиваем суммироватьт
+        self.halt()
     
+    def max_in_list(self):
+        value = self.read_memory(1)
+        
+        self.write_memory(2,value[0])
+  
+        while self.read_memory(0) != 0:
+   
+            self.test_opcode(2) # проверка 
+            self.test_operand() # проверка 
+
+            value = self.read_memory(1) # читаем список значений из памяти 
+            max_data =self.read_memory(2) # максимальный элемент
+     
+            data_max_now=value[-(self.read_memory(0))]   if  value[-(self.read_memory(0))] > self.read_memory(2) else self.read_memory(2)
+            self.write_memory(2,data_max_now) 
+            self.write_memory(0,self.read_memory(0)-1)
+
+
     def sub(self): # вычитание
+        
         self.test_opcode(7)
         self.test_operand()
         value = self.read_memory(self.operand)
         self.update_acc(self.acc - value)
+        
+    
+
+
     def brz(self):
         pass
     
@@ -232,26 +299,27 @@ class CPU:
 
 
     def trace(self):
-        color = '1'#fg('white')
+        color = fg('green')
         # # Отображение процессора и памяти
-        print( color + f'Opcode: {self.opcode}, Operand: {self.operand}')
+        print( fg('red') + f'Opcode: {self.opcode}, Operand: {self.operand}')
         print( color + f"ACC: {self.acc}, PC: {self.pc}, Z: {self.zero_flag}, P: {self.pos_flag}")
         print( color + f"ROM: {self.mem_prog}")
         print( color + f"MEM: {self.mem_data}")
+        print( fg('white') +'')
 
     def step(self):
+    
         self.fetch()
         self.decode()
         if self.debug:
             self.trace()
     
     def run(self):
-        a=0
+        self.debug = True
         while not self.halted:
-            if a==7:
-                self.halt()
-            a+=1
             self.step()
+        self.debug = True
+
     def halt(self):
         self.halted = True
 
@@ -273,29 +341,25 @@ def program_iterations(cpu=None, iterations=1):
 
 
 def main():
-    time_sleep()
-    
-    cpu = CPU()     # 5
-    
-    
+    #двухадресная команда add x, y (сложить содержимое ячеек x и y, а результат поместить в ячейку y)
+    # архитектура гарвардская 
+    # 
+       
+    cpu = CPU()    # 5
+
     cpu.cold_start() # создание памяти 
     cpu.reset()     # Сброс должен быть вызван перед любым доступом к памяти  
-    cpu.mem_data[2] = 7  # Сохраняем данные для загрузки в аккумулятор 
-    cpu.mem_data[3] = 10
-
-    cpu.program(0, 102)
-    cpu.program(1, 201)
-    cpu.program(2, 303)
-    cpu.program(3, 900)
-    cpu.debug = True
+    cpu.mem_data[0] = 7  # Сохраняем данные для загрузки в аккумулятор 
+ 
+    cpu.mem_data[1] = [1,2,3,4444,5,6,7]
+    
+    cpu.program(0,1)
+    cpu.program(1,2)
+  
     cpu.run()
 
     
-    # print(  color + f'Opcode: {cpu.opcode}, Operand: {cpu.operand}' )
-    # time.sleep(1)
-    # print( color +  f"ACC: {cpu.acc}, PC: {cpu.pc}, Z: {cpu.zero_flag}, P: {cpu.pos_flag}\n" )
-    # time.sleep(1)
-    # print( fg('yellow') +   f'Память данных: {cpu.mem_data}' )
+    
     
 def main_second():
 
@@ -354,8 +418,4 @@ def test_main(cpu=None, iterations=1):
 
 # test_main()
 if __name__ == '__main__':
-    code= int(input('Введите какой статр начать 1 или 2'))
-    if code==1:
-        main()
-    else:
-        main_second()
+    main()
