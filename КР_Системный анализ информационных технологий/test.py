@@ -27,11 +27,19 @@ class Game:
                 '22292777711144429221244',
                 '22922777222144422211944',
                 '22222777229111111119222']
+        """
+        КУСТ 
+        КАМЕНЬ
+        РЕКА
+        ДОРОГА 
+        дорогу можно настроить самому, пустые поля будут дефолтные , камень будет весит 1000000
+        для того чтобы срабатывал фактор проходимости , так же река и куст 
+        """
         self.grid = [[int(char) for char in string ] for string in grid]
       
         self.graph = {}
         self.start = (0, 7)
-        self.goal = (22, 7)
+        self.goal = (0, 7)
         self.queue = []
 
         heappush(self.queue, (0, self.start))
@@ -63,7 +71,54 @@ class Game:
         check_next_node = lambda x, y: True if 0 <= x < self.cols and 0 <= y < self.rows else False
         ways = [-1, 0], [0, -1], [1, 0], [0, 1]
         return [(self.grid[y + dy][x + dx], (x + dx, y + dy)) for dx, dy in ways if check_next_node(x + dx, y + dy)]
+    
+    
+    def custom_map(self):
+        print('Хотите сделать карту кастомной?\n1-Дефолт\n2-Свои параметры')
+        check= input('Введите вариант ответа:')
+        a=0
+        while  type(check)!=type(1) :
+            check= int(input('Введите вариант ответа:'))
+            a+1
+            if a==10:
+                return {'code':0, 'message':'Все ок?? надо было нажать 1 или 2. ОЙ ВСЁ'}
 
+        if int(check)==1:
+            return
+        else:
+            
+            temp=self.set_graph_size()
+            if temp['code']==1:return temp
+            else:return {'code':0}
+            
+
+    
+
+
+    def out_put_message(self, message):
+        check= input(f'{message}')
+        a=0
+        while  type(check)!=type(1) :
+            check= input('Введите число любое:')
+            a+1
+            if a==10:
+                return {'code':0, 'message':'Все ок?? надо было нажать верные кнопки . ОЙ ВСЁ'}
+        return {'code':1, 'message':f'ok', 'data':int(check)}
+    
+    
+    def set_graph_size(self):
+        message_list=['Введите вес для дороги:','Введите вес для пустоши:'
+                      'Введите вес для реки:','Введите вес для камня:',
+                      'Введите вес для кустов:', 'Введите вес для травы:'
+                      ]
+        for number, message in enumerate(message_list):
+            check=self.out_put_message(message)
+            if check['code']==1:
+                pass
+            else:
+                return check
+        
+   
     @classmethod
     def get_circle(cls, x, y):
         return (x * cls.TILE + cls.TILE // 2, y * cls.TILE + cls.TILE // 2), cls.TILE // 4
@@ -97,7 +152,8 @@ class Game:
 
     def set_visited(self,x,y):
         self.visited[x] = y
-
+    def set_abs_visited(self, visited):
+        self.visited=visited
     def get_visited(self,x):
         return  self.visited[x] 
        
@@ -120,8 +176,42 @@ class Game:
         pg.display.flip()
         self.clock.tick(7)
         
-    
+    def get_click_mouse_pos(self):
+        x, y = pg.mouse.get_pos()
+        grid_x, grid_y = x // self.TILE, y // self.TILE
+        pg.draw.circle(self.sc, pg.Color('red'), *self.get_circle(grid_x, grid_y))
+        click = pg.mouse.get_pressed()
+      
+        return (grid_x, grid_y) if click[0] else False
 
+    
+    def dijkstra(self, start, goal, graph):
+        self.goal=goal
+        self.queue = []
+        self.start=start
+        self.graph=graph
+        
+        heappush(self.queue, (0, self.start))
+        cost_visited = {self.start: 0}
+        visited = {self.start: None}
+
+        while self.queue:
+            cur_cost, cur_node = heappop(self.queue)
+            if cur_node == self.goal:
+                break
+
+            neighbours = self.graph[cur_node]
+        
+            for neighbour in neighbours:
+                neigh_cost, neigh_node = neighbour
+                new_cost = cost_visited[cur_node] + neigh_cost
+
+                if neigh_node not in cost_visited or new_cost < cost_visited[neigh_node]:
+                    priority = new_cost + self.heuristic(neigh_node, self.goal)
+                    heappush(self.queue, (priority, neigh_node))
+                    cost_visited[neigh_node] = new_cost
+                    visited[neigh_node] = cur_node
+        return visited
 
 
 
@@ -198,13 +288,13 @@ class Menu:
     def show_menu(self):
         self.mainMenu.mainloop(self.screen) 
 
-menu= Menu()
-menu.settings()
-menu.settings_add_button()
-menu.add_button(title= 'Settings', font_color= 'green' , background_color= 'black', action=menu.return_settings())
-menu.add_label()
-menu.add_button(title= 'Exit', font_color='black', background_color= "white")
-menu.show_menu()
+# menu= Menu()
+# menu.settings()
+# menu.settings_add_button()
+# menu.add_button(title= 'Settings', font_color= 'green' , background_color= 'black', action=menu.return_settings())
+# menu.add_label()
+# menu.add_button(title= 'Exit', font_color='black', background_color= "white")
+# menu.show_menu()
 
 
 
@@ -263,29 +353,47 @@ menu.show_menu()
 
 
 
-if False: # __name__ == "__main__"
+if True: # __name__ == "__main__"
     game=Game()
     game.create_graph()
+    game.custom_map()
+    """
+        КУСТ 
+        КАМЕНЬ
+        РЕКА
+        ДОРОГА 
+        дорогу можно настроить самому, пустые поля будут дефолтные , камень будет весит 1000000
+        для того чтобы срабатывал фактор проходимости , так же река и куст 
+        """
+    visited= {game.start: None}
     while True:
         game.activate_game()
-        if game.get_queue():
-            cur_cost, cur_node =game.appent_goal()
-            if cur_node == game.get_goal():
-                game.set_queue()
-                continue
-            next_nodes = game.get_value_graph(cur_node)
-            for next_node in next_nodes:
-                neigh_cost, neigh_node = next_node
-                new_cost = game.get_cost_visited(cur_node) + neigh_cost
+        # if game.get_queue():
+        #     cur_cost, cur_node =game.appent_goal()
+        #     if cur_node == game.get_goal():
+        #         game.set_queue()
+        #         continue
+        #     next_nodes = game.get_value_graph(cur_node)
+        #     for next_node in next_nodes:
+        #         neigh_cost, neigh_node = next_node
+        #         new_cost = game.get_cost_visited(cur_node) + neigh_cost
 
-                if neigh_node not in game.get_cost_visited() or new_cost < game.get_cost_visited(neigh_node):
-                    priority = new_cost + game.heuristic(neigh_node, game.goal)
-                    game.append_queue(priority, neigh_node)
-                    game.set_cost_visited(neigh_node, new_cost)
-                    game.set_visited(neigh_node, cur_node)
+        #         if neigh_node not in game.get_cost_visited() or new_cost < game.get_cost_visited(neigh_node):
+        #             priority = new_cost + game.heuristic(neigh_node, game.goal)
+        #             game.append_queue(priority, neigh_node)
+        #             game.set_cost_visited(neigh_node, new_cost)
+        #             game.set_visited(neigh_node, cur_node)
         # draw path
-        path_head, path_segment = cur_node, cur_node
-        while path_segment:
+        mouse_pos = game.get_click_mouse_pos()
+        if mouse_pos:
+            visited= game.dijkstra(game.start, mouse_pos, game.graph)
+       
+            game.set_abs_visited(visited)
+            game.goal = mouse_pos
+
+        path_head, path_segment = game.goal, game.goal
+      
+        while path_segment and path_segment in visited:
             game.move_start(path_segment)
             path_segment =game.get_visited(path_segment)
         
