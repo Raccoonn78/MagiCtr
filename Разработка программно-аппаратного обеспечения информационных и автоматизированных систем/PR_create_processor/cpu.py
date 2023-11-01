@@ -193,7 +193,43 @@ class CPU:
                 self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
                 self.opcode = 2
                 self.operand = self.instr
-                self.max_in_list()
+                self.write_first()
+                return
+            if self.instr==3:
+                self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
+                self.opcode = 3
+                self.operand = self.instr
+                self.write_number()
+                return
+            if self.instr==4:
+                self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
+                self.opcode = 4
+                self.operand = self.instr
+                self.up_schet()
+                return
+            if self.instr==5:
+                self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
+                self.opcode = 5
+                self.operand = self.instr
+                self.control_number()
+                return
+            if self.instr==6:
+                self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
+                self.opcode = 6
+                self.operand = self.instr
+                self.sravnenie()
+                return
+            if self.instr==7:
+                self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
+                self.opcode = 7
+                self.operand = self.instr
+                self.write_schetchick()
+                return
+            if self.instr==8:
+                self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
+                self.opcode = 8
+                self.operand = self.instr
+                self.write_ram()
                 return
         if self.instr==0:
             self.halt()
@@ -256,24 +292,36 @@ class CPU:
          # заканчиваем суммироватьт
         self.halt()
     
-    def max_in_list(self):
-        value = self.read_memory(1)
+    def write_schetchick(self):# присваиваем счетчику 1 так как числа начиаются с первой ячейки # 7
+        self.write_memory(-3,1)
+    def write_ram(self): # 8  # типо записи в оперативу 
+        self.write_memory(-2, self.read_memory( self.read_memory(-3)))
+       
+
+    def write_first(self): # запись число !первое!   #2
+        value = self.read_memory(-3) # счетчик массива 
+        x=self.read_memory(value)
+        self.write_memory(-1,x)
+
+    def write_number(self): # запись число  #3 
+        value = self.read_memory(-2) # счетчик массива 
+        # x=self.read_memory(value)
+        self.write_memory(-1,value)
+
+    def up_schet(self): # переход к следующему числу списка  #4 
+        value = self.read_memory(-3)
+        self.write_memory(-3,value+1)
+
+    def control_number(self): # 5
+        x=self.read_memory(-2)
+        if self.sravnenie(x):
+            self.write_number()
+        self.write_ram() # возможно нужно вынксти как такт 
         
-        self.write_memory(2,value[0])
-  
-        while self.read_memory(0) != 0:
-   
-            self.test_opcode(2) # проверка 
-            self.test_operand() # проверка 
-
-            value = self.read_memory(1) # читаем список значений из памяти 
-            max_data =self.read_memory(2) # максимальный элемент
-     
-            data_max_now=value[-(self.read_memory(0))]   if  value[-(self.read_memory(0))] > self.read_memory(2) else self.read_memory(2)
-            self.write_memory(2,data_max_now) 
-            self.write_memory(0,self.read_memory(0)-1)
-
-
+    def sravnenie(self, x ): # 6
+        y = self.read_memory(-1)
+        return 1 if x>y else None
+        
     def sub(self): # вычитание
         
         self.test_opcode(7)
@@ -301,7 +349,7 @@ class CPU:
     def trace(self):
         color = fg('green')
         # # Отображение процессора и памяти
-        print( fg('red') + f'Opcode: {self.opcode}, Operand: {self.operand}')
+        # print( fg('red') + f'Opcode: {self.opcode}, Operand: {self.operand}')
         print( color + f"ACC: {self.acc}, PC: {self.pc}, Z: {self.zero_flag}, P: {self.pos_flag}")
         print( color + f"ROM: {self.mem_prog}")
         print( color + f"MEM: {self.mem_data}")
@@ -344,17 +392,73 @@ def main():
     #двухадресная команда add x, y (сложить содержимое ячеек x и y, а результат поместить в ячейку y)
     # архитектура гарвардская 
     # 
-       
+    """
+    Последовательность команд :
+    7,8,2,4,5,4,8 ,5,4,8 ,5,4,8 ,5,4,8 ... столько раз сколько чисел в списке
+    """
     cpu = CPU()    # 5
 
     cpu.cold_start() # создание памяти  
     cpu.reset()     # Сброс должен быть вызван перед любым доступом к памяти  
     cpu.mem_data[0] = 7  # Сохраняем данные для загрузки в аккумулятор 
  
-    cpu.mem_data[1] = [1,2,3,4444,5,6,7]
+    cpu.mem_data[1] =9
+    cpu.mem_data[2]=10
+    cpu.mem_data[3]=3
+    cpu.mem_data[4]=444
+    cpu.mem_data[5]=5
+    cpu.mem_data[6]=6
+    cpu.mem_data[7]=7
 
     cpu.program(0,1)
-    cpu.program(1,2)
+    cpu.program(1,7)
+
+    cpu.program(2,1)
+    cpu.program(3,8)
+
+    cpu.program(4,1)
+    cpu.program(5,2)
+
+    cpu.program(6,1)
+    cpu.program(7,4)
+
+    cpu.program(8,1)
+    cpu.program(9,5)
+
+    cpu.program(10,1)
+    cpu.program(11,4)
+
+    cpu.program(12,1)
+    cpu.program(13,5)
+
+    cpu.program(14,1)
+    cpu.program(15,4)
+
+    cpu.program(16,1)
+    cpu.program(17,5)
+
+    cpu.program(18,1)
+    cpu.program(19,4)
+
+    cpu.program(20,1)
+    cpu.program(21,5)
+
+    cpu.program(22,1)
+    cpu.program(23,4)
+
+    cpu.program(24,1)
+    cpu.program(25,5)
+
+    cpu.program(26,1)
+    cpu.program(27,4)
+
+    cpu.program(28,1)
+    cpu.program(29,5)
+
+    
+
+
+    
   
     cpu.run()
 
@@ -419,3 +523,17 @@ def test_main(cpu=None, iterations=1):
 # test_main()
 if __name__ == '__main__':
     main()
+
+
+
+
+# while self.read_memory(0) != 0:
+   
+            
+
+#             value = self.read_memory(1) # читаем список значений из памяти 
+#             max_data =self.read_memory(2) # максимальный элемент
+     
+#             data_max_now=value[-(self.read_memory(0))]   if  value[-(self.read_memory(0))] > self.read_memory(2) else self.read_memory(2)
+#             self.write_memory(2,data_max_now) 
+#             self.write_memory(0,self.read_memory(0)-1)
