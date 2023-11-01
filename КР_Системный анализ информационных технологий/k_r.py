@@ -78,13 +78,13 @@ def gameLoop():
                 elif event.key == pygame.K_DOWN:
                     y1_change = snake_block
                     x1_change = 0
-            if x1 >= (dis_width//2) :
+            if x1 >= (dis_width-200) :
                 y1_change = 10
                 x1_change = 0
             elif x1 < 250 : 
                 y1_change = 10
                 x1_change = 0
-            if y1 >= (dis_height//2) :
+            if y1 >= (dis_height-200) :
                 x1_change = -10
                 y1_change = 0
             elif y1 < 250 :

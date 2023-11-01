@@ -40,6 +40,7 @@ def dijkstra(start, goal, graph):
             break
 
         neighbours = graph[cur_node]
+        print('neighbours',neighbours)
         for neighbour in neighbours:
             neigh_cost, neigh_node = neighbour
             new_cost = cost_visited[cur_node] + neigh_cost
@@ -52,12 +53,12 @@ def dijkstra(start, goal, graph):
     return visited
 
 
+
+
+
 cols, rows = 23, 13
 TILE = 70
 
-pg.init()
-sc = pg.display.set_mode([cols * TILE, rows * TILE])
-clock = pg.time.Clock()
 # set grid
 grid = ['22222222222222222222212',
         '22222292222911112244412',
@@ -75,9 +76,18 @@ grid = ['22222222222222222222212',
 grid = [[int(char) for char in string ] for string in grid]
 # adjacency dict
 graph = {}
+
+
+
 for y, row in enumerate(grid):
     for x, col in enumerate(row):
         graph[(x, y)] = graph.get((x, y), []) + get_neighbours(x, y)
+
+
+pg.init()
+sc = pg.display.set_mode([cols * TILE, rows * TILE])
+clock = pg.time.Clock()
+
 
 start = (0, 7)
 goal = start
