@@ -309,18 +309,32 @@ class CPU:
         self.write_memory(-1,value)
 
     def up_schet(self): # переход к следующему числу списка  #4 
+        
         value = self.read_memory(-3)
+        print(value)
         self.write_memory(-3,value+1)
 
     def control_number(self): # 5
+        self.up_schet()
+        if not self.sravnenie_schet():
+            x=self.read_memory(-2)
+            if self.sravnenie(x):
+                self.write_number()
+            self.write_ram() # возможно нужно вынксти как такт 
+            self.control_number()
         x=self.read_memory(-2)
         if self.sravnenie(x):
             self.write_number()
-        self.write_ram() # возможно нужно вынксти как такт 
+        self.write_ram()
         
     def sravnenie(self, x ): # 6
         y = self.read_memory(-1)
         return 1 if x>y else None
+    
+    def sravnenie_schet(self ): # 9
+        y = self.read_memory(0)
+        x= self.read_memory(-3)
+        return True if x>y else False
         
     def sub(self): # вычитание
         
@@ -400,7 +414,7 @@ def main():
 
     cpu.cold_start() # создание памяти  
     cpu.reset()     # Сброс должен быть вызван перед любым доступом к памяти  
-    cpu.mem_data[0] = 7  # Сохраняем данные для загрузки в аккумулятор  # кол-во данных в массиве
+    cpu.mem_data[0] = 8  # Сохраняем данные для загрузки в аккумулятор  # кол-во данных в массиве
  
     cpu.mem_data[1] =9
     cpu.mem_data[2]=10
@@ -409,6 +423,7 @@ def main():
     cpu.mem_data[5]=5
     cpu.mem_data[6]=6
     cpu.mem_data[7]=7
+    cpu.mem_data[8]=555
 
     cpu.program(0,1)
     cpu.program(1,7)
@@ -419,47 +434,15 @@ def main():
     cpu.program(4,1)
     cpu.program(5,2)
 
+
     cpu.program(6,1)
-    cpu.program(7,4)
+    cpu.program(7,5)
 
-    cpu.program(8,1)
-    cpu.program(9,5)
-
-    cpu.program(10,1)
-    cpu.program(11,4)
-
-    cpu.program(12,1)
-    cpu.program(13,5)
-
-    cpu.program(14,1)
-    cpu.program(15,4)
-
-    cpu.program(16,1)
-    cpu.program(17,5)
-
-    cpu.program(18,1)
-    cpu.program(19,4)
-
-    cpu.program(20,1)
-    cpu.program(21,5)
-
-    cpu.program(22,1)
-    cpu.program(23,4)
-
-    cpu.program(24,1)
-    cpu.program(25,5)
-
-    cpu.program(26,1)
-    cpu.program(27,4)
-
-    cpu.program(28,1)
-    cpu.program(29,5)
-
-    
+   
 
 
     
-  
+
     cpu.run()
 
     
