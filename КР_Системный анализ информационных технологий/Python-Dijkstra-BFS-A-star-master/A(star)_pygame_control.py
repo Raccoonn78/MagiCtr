@@ -95,7 +95,7 @@ queue = []
 heappush(queue, (0, start))
 visited = {start: None}
 
-bg = pg.image.load(r'c:\\Users\\Admin\\Desktop\\VS_code\\magic\\MagiCtr\\КР_Системный анализ информационных технологий\\Python-Dijkstra-BFS-A-star-master\\img\\2.png').convert()
+bg = pg.image.load(r'C:\\Users\\Дмитрий\\Desktop\\МАГИСТР\\MagiCtr\\КР_Системный анализ информационных технологий\\Python-Dijkstra-BFS-A-star-master\\img\\2.png').convert()
 bg = pg.transform.scale(bg, (cols * TILE, rows * TILE))
 while True:
     # fill screen
