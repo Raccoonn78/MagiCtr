@@ -24,6 +24,14 @@ class Game:
                           '22292777711144429221244',
                           '22922777222144422211944',
                           '22222777229111111119222']
+        self.size_grid= {
+            'Дорога':'1',
+            'Пустошь':'2',
+            'Река':'7',
+            'Камень':'9',                        
+            'Куст':'9',                        
+            'Трава':'4',                        
+                         }
         """
         КУСТ 
         КАМЕНЬ
@@ -74,52 +82,56 @@ class Game:
         pass
 
     def get_next_nodes(self, x, y):
-        def check_next_node(
-            x, y): return True if 0 <= x < self.cols and 0 <= y < self.rows else False
+        check_next_node = lambda x, y: True if 0 <= x < self.cols and 0 <= y < self.rows else False
         ways = [-1, 0], [0, -1], [1, 0], [0, 1]
         return [(self.grid[y + dy][x + dx], (x + dx, y + dy)) for dx, dy in ways if check_next_node(x + dx, y + dy)]
 
     def custom_map(self):
         print('Хотите сделать карту кастомной?\n1-Дефолт\n2-Свои параметры')
-        check = input('Введите вариант ответа:')
+        check = input('Введите вариант ответа:').strip()
         a = 0
-        while not check.isdigit():
-            check = input('Введите вариант ответа:')
+        while not check.isdigit() and ' ' in check:
+            check = input('Введите вариант ответа:').strip()
             a += 1
             if a == 10:
-                return {'code': 0, 'message': 'Все ок?? надо было нажать 1 или 2. ОЙ ВСЁ'}
-
+                return {'code': 0, 'message': 'ОЙ ВСЁ'}
+            
         if int(check) == 1:
-            return
-        else:
-
+            return {'code':1,
+                    'message': 'Дефолтный варинт'}
+        elif int(check) == 2:
             temp = self.set_graph_size()
             if temp['code'] == 1:
-                return temp
+                print(self.grid_init)
+                return {'code':1,
+                        'message': 'Карта была изменена'}
             else:
-                return {'code': 0}
+                return {'code': 0 ,
+                        'message':temp['message']}
 
     def out_put_message(self, message):
         check = input(f'{message}')
         a = 0
-        while type(check) != type(1):
-            check = input('Введите число любое:')
-            a+1
-            if a == 10:
-                return {'code': 0, 'message': 'Все ок?? надо было нажать верные кнопки . ОЙ ВСЁ'}
-        return {'code': 1, 'message': f'ok', 'data': int(check)}
+        while not check.isdigit() or (' ' in check) or (not eval(f'-1<{check}<10')):
+            check = input('Введите число от 0 до 9:').strip()
+            a+=1
+            if a == 10: return {'code': 0, 
+                                'message': 'ОЙ ВСЁ' }
+        return {'code': 1,
+                'message': f'ok',
+                'data': check }
 
     def set_graph_size(self):
-        message_list = ['Введите вес для дороги:',  'Введите вес для пустоши:',
-                        'Введите вес для реки:',    'Введите вес для камня:',
-                        'Введите вес для кустов:',  'Введите вес для травы:'
-                        ]
-        for number, message in enumerate(message_list):
+        message_list = ['Введите вес для дороги от 0 до 9:',  'Введите вес для пустоши от 0 до 9:',
+                        'Введите вес для реки от 0 до 9:',    'Введите вес для камня от 0 до 9:',
+                        'Введите вес для кустов от 0 до 9:',  'Введите вес для травы от 0 до 9:' ]
+        for key, message in zip(self.size_grid.keys(),message_list):
             check = self.out_put_message(message)
             if check['code'] == 1:
-                pass
-            else:
-                return check
+                self.grid_init=[ x.replace(self.size_grid[key],check['data'] )  for x in self.grid_init]
+            elif check['code']==0:return check
+        else: return check
+        
 
     @classmethod
     def get_circle(cls, x, y):
@@ -302,6 +314,7 @@ if True:  # __name__ == "__main__"
     game = Game()
     while_true = False
     temp = game.custom_map()
+
     if temp['code'] == 1:
         while_true = True
         game.create_graph()
@@ -314,7 +327,7 @@ if True:  # __name__ == "__main__"
         ДОРОГА 
         дорогу можно настроить самому, пустые поля будут дефолтные , камень будет весит 1000000
         для того чтобы срабатывал фактор проходимости , так же река и куст 
-        """
+    """
     
     while while_true:
         game.activate_game()
@@ -334,19 +347,14 @@ if True:  # __name__ == "__main__"
         #             game.set_cost_visited(neigh_node, new_cost)
         #             game.set_visited(neigh_node, cur_node)
         # draw path
-        mouse_pos = game.get_click_mouse_pos()
+        mouse_pos = game.get_click_mouse_pos() # выбор позиции 
         if mouse_pos:
             visited = game.dijkstra(game.start, mouse_pos, game.graph)
-
             game.set_abs_visited(visited)
             game.goal = mouse_pos
-
         path_head, path_segment = game.goal, game.goal
-
         while path_segment and path_segment in visited:
             game.move_start(path_segment)
             path_segment = game.get_visited(path_segment)
-
         game.idk(path_head)
-        # pygame necessary lines
         game.ivent_game()
