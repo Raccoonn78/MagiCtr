@@ -45,7 +45,7 @@ class CPU:
 
     def memmory_programm(self):  # создаем память для программы
         for i in range(self.MAX_MEM):
-            self.mem_prog.insert(i, 0)
+            self.mem_prog.insert(i, '0x0')
         
 
     def memmory_data(self):  # создаем папять для данных
@@ -107,9 +107,13 @@ class CPU:
     """
 
     def fetch(self):  # метод для обработки циклов выборки
-        self.instr = self.read_prog(self.pc)
+        temp= self.read_prog(self.pc)
+        print(temp)
+        temp=temp.split('x')
+        self.instr = int(temp[0])
+        self.tuple_args=tuple([int(i) for i in temp[1:] ])
         self.pc += 1  # переходим к следующей команде
-
+     
 
     def decode1(self): # метод для декодирования 
         """
@@ -184,52 +188,69 @@ class CPU:
         if self.instr==1:
             self.fetch()
             if self.instr==1:
-                self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
+                # self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
                 self.opcode = 1
                 self.operand = self.instr
                 self.add()
                 return
             if self.instr==2:
-                self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
+                # self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
                 self.opcode = 2
                 self.operand = self.instr
-                self.write_first()
+                x,y=self.tuple_args
+                self.write_first(x,y)
                 return
             if self.instr==3:
-                self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
+                # self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
                 self.opcode = 3
                 self.operand = self.instr
-                self.write_number()
+                x,y= self.tuple_args
+                self.write_number(x,y)
                 return
             if self.instr==4:
-                self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
+                # self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
                 self.opcode = 4
                 self.operand = self.instr
                 self.up_schet()
                 return
             if self.instr==5:
-                self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
+                # self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
                 self.opcode = 5
                 self.operand = self.instr
-                self.control_number()
+                step=1
+                x=0
+                y=-1
+                z=-2
+                c=-3
+                try:
+                    x,y,z,c,step=self.tuple_args
+                except:
+                    try:
+                        x,y,z,c=self.tuple_args
+                    except:
+                        ...
+                self.control_number(x,y,z,c,step)
                 return
             if self.instr==6:
-                self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
+                # self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
                 self.opcode = 6
                 self.operand = self.instr
-                self.sravnenie()
+                x,y=self.tuple_args
+                self.sravnenie(x,y)
                 return
             if self.instr==7:
-                self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
+                # self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
                 self.opcode = 7
                 self.operand = self.instr
-                self.write_schetchick()
+                x,y=self.tuple_args
+                self.write_schetchick(x,y)
                 return
             if self.instr==8:
-                self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
+                # self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
                 self.opcode = 8
                 self.operand = self.instr
-                self.write_ram()
+                x,y=self.tuple_args
+                self.write_number(x,self.read_memory(y))
                 return
         if self.instr==0:
             self.halt()
@@ -269,15 +290,14 @@ class CPU:
     def not_(self):
         pass
 
-    def add(self): # сумма
-        while self.read_memory(0) != 0:
-            self.test_opcode(1) # проверка 
+    def add(self, x=0, y=1,z=2): # сумма (полная шляпа это вообще не мое задание , случайно сделал )
+        while self.read_memory(x) != 0:
+            self.test_opcode(y) # проверка 
             self.test_operand() # проверка 
-
-            value = self.read_memory(1) # читаем список значений из памяти 
-            all_sum= value[-(self.read_memory(0))]+self.read_memory(2) # 
-            self.write_memory(2,all_sum) 
-            self.write_memory(0,self.read_memory(0)-1)
+            value = self.read_memory(y) # читаем список значений из памяти 
+            all_sum= value[-(self.read_memory(x))]+self.read_memory(z) # 
+            self.write_memory(z,all_sum) 
+            self.write_memory(x,self.read_memory(x)-1)
             # получаем из нулевой ячкйки памяти значение (кол-во элементов )
             # получаем список чесиле
             # суммируем значение которое лежит в ячейки пяти три , с число 
@@ -285,65 +305,51 @@ class CPU:
             # то мы дуем уменьшать число в нулевой ячейки для того чтобы поремещатться по массиму 
             # и забирать из него значения
             # дальше просто уменьшаем кол-во элементов в первой ячейки данные на 1 
-            # и перезаписываем ее обратно, а сумму записываем в ячейку три  
-            #
-
-            
-         # заканчиваем суммироватьт
+            # и перезаписываем ее обратно, а сумму записываем в ячейку три      
+            # заканчиваем суммироватьт
         self.halt()
     
-    def write_schetchick(self):# присваиваем счетчику 1 так как числа начиаются с первой ячейки # 7
-        self.write_memory(-3,1)
-    def write_ram(self): # 8  # типо записи в оперативу 
-        self.write_memory(-2, self.read_memory( self.read_memory(-3)))
-       
+    def write_schetchick(self, x,y):
+        # присваиваем счетчику 1 так как числа начиаются с первой ячейки # 7
+        self.write_memory(x,y)
 
-    def write_first(self): # запись число !первое!   #2
-        value = self.read_memory(-3) # счетчик массива 
-        x=self.read_memory(value)
-        self.write_memory(-1,x)
 
-    def write_number(self): # запись число  #3 
-        value = self.read_memory(-2) # счетчик массива 
-        # x=self.read_memory(value)
-        self.write_memory(-1,value)
+    def write_first(self,x,y): 
+        # запись число !первое!   #2
+        self.write_memory(x,self.read_memory(self.read_memory(y)))# счетчик массива
 
-    def up_schet(self): # переход к следующему числу списка  #4 
-        
-        value = self.read_memory(-3)
-        print(value)
-        self.write_memory(-3,value+1)
+    def write_number(self, x,y): 
+        # запись число  #3 
+        self.write_memory(x,self.read_memory(y))# счетчик массива 
 
-    def control_number(self): # 5
-        self.up_schet()
-        if not self.sravnenie_schet():
-            x=self.read_memory(-2)
-            if self.sravnenie(x):
-                self.write_number()
-            self.write_ram() # возможно нужно вынксти как такт 
-            self.control_number()
-        x=self.read_memory(-2)
-        if self.sravnenie(x):
-            self.write_number()
-        self.write_ram()
+   
+
+    def control_number(self, x=0,y=-1,z=-2,c=-3, step=1): # 5
+        # сложно для чтения (sry
+        # максимальное число в последовательности 
+        # используются самые простые операции запись чтение и сравнение сумма для счетчика  и рекурсия 
+        self.write_memory(c, self.add_m(self.read_memory(c),step)) # увеличиваем значение счетчика на 1
+        if not self.sravnenie_schet(c,x): #  проверяем что счетчик не вышел за пределы указанного пользователем кол-во чисел
+            if self.sravnenie_schet(z, y): #  проверяем что число в ячейки  z больше y
+                self.write_memory(y,self.read_memory(z)) #  если это так то меняем их местами
+            self.write_memory(z,self.read_memory(self.read_memory(c)) )  #  записываем в ячейку z следующее значение последовательности 
+            self.control_number() #  делаем рекурсию 
+        if self.sravnenie_schet(z,y): #  если счетчик вышел за пределы и ячейка z больше y меняем их местами 
+            self.write_memory(y,self.read_memory(z))
+        #  в итоге ответ будет в ячейке y 
+
+    def sravnenie_schet(self,x,y ): # 9
+        return True if self.read_memory(x)>self.read_memory(y) else False # -3 0
         
-    def sravnenie(self, x ): # 6
-        y = self.read_memory(-1)
-        return 1 if x>y else None
-    
-    def sravnenie_schet(self ): # 9
-        y = self.read_memory(0)
-        x= self.read_memory(-3)
-        return True if x>y else False
-        
-    def sub(self): # вычитание
-        
+    def sub(self): 
+        # вычитание
         self.test_opcode(7)
         self.test_operand()
         value = self.read_memory(self.operand)
         self.update_acc(self.acc - value)
         
-    
+    def add_m(self, x,y):
+        return x+y
 
 
     def brz(self):
@@ -370,7 +376,6 @@ class CPU:
         print( fg('white') +'')
 
     def step(self):
-    
         self.fetch()
         self.decode()
         if self.debug:
@@ -415,8 +420,9 @@ def main():
     cpu.cold_start() # создание памяти  
     cpu.reset()     # Сброс должен быть вызван перед любым доступом к памяти  
     cpu.mem_data[0] = 8  # Сохраняем данные для загрузки в аккумулятор  # кол-во данных в массиве
- 
-    cpu.mem_data[1] =9
+    
+
+    cpu.mem_data[1] =1000
     cpu.mem_data[2]=10
     cpu.mem_data[3]=3
     cpu.mem_data[4]=444
@@ -425,23 +431,22 @@ def main():
     cpu.mem_data[7]=7
     cpu.mem_data[8]=555
 
-    cpu.program(0,1)
-    cpu.program(1,7)
 
-    cpu.program(2,1)
-    cpu.program(3,8)
+    # на вход индекс первое отвечает за номер операции , 
+    # далее значения которые нужно поместить на вход операции ,
+    # у всех он разный 
 
-    cpu.program(4,1)
-    cpu.program(5,2)
+    cpu.program(0,'1x0')#  1x0
+    cpu.program(1,'7x98x1') # 7x98x1
 
+    cpu.program(2,'1x0') # 1x0
+    cpu.program(3,'8x98x97') # 8x98x97
 
-    cpu.program(6,1)
-    cpu.program(7,5)
+    cpu.program(4,'1x0') # 1x0
+    cpu.program(5,'2x99x97') # 2x99x97
 
-   
-
-
-    
+    cpu.program(6,'1x0') # 1x0
+    cpu.program(7,'5x0x99x98x97') # 5x0x99x98x97x
 
     cpu.run()
 
