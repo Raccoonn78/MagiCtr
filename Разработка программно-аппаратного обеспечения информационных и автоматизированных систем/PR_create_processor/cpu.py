@@ -108,7 +108,6 @@ class CPU:
 
     def fetch(self):  # метод для обработки циклов выборки
         temp= self.read_prog(self.pc)
-        print(temp)
         temp=temp.split('x')
         self.instr = int(temp[0])
         self.tuple_args=tuple([int(i) for i in temp[1:] ])
@@ -218,18 +217,17 @@ class CPU:
                 self.opcode = 5
                 self.operand = self.instr
                 step=1
-                x=0
-                y=-1
+               
                 z=-2
                 c=-3
                 try:
-                    x,y,z,c,step=self.tuple_args
+                    z,c,step=self.tuple_args
                 except:
                     try:
-                        x,y,z,c=self.tuple_args
+                        z,c=self.tuple_args
                     except:
                         ...
-                self.control_number(x,y,z,c,step)
+                self.control_number(z,c,step)
                 return
             if self.instr==6:
                 # self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
@@ -252,6 +250,14 @@ class CPU:
                 x,y=self.tuple_args
                 self.write_number(x,self.read_memory(y))
                 return
+            if self.instr==9:# где будет хранится ответ
+                self.opcode = 9
+                self.operand = self.instr
+                x,y=self.tuple_args
+                self.x,self.y= x,y
+                # self.write_number(self.x,self.read_memory(self.y))
+                return
+            
         if self.instr==0:
             self.halt()
         else:
@@ -324,18 +330,19 @@ class CPU:
 
    
 
-    def control_number(self, x=0,y=-1,z=-2,c=-3, step=1): # 5
+    def control_number(self, z=-2,c=-3, step=1): # 5
+        
         # сложно для чтения (sry
         # максимальное число в последовательности 
         # используются самые простые операции запись чтение и сравнение сумма для счетчика  и рекурсия 
         self.write_memory(c, self.add_m(self.read_memory(c),step)) # увеличиваем значение счетчика на 1
-        if not self.sravnenie_schet(c,x): #  проверяем что счетчик не вышел за пределы указанного пользователем кол-во чисел
-            if self.sravnenie_schet(z, y): #  проверяем что число в ячейки  z больше y
-                self.write_memory(y,self.read_memory(z)) #  если это так то меняем их местами
+        if not self.sravnenie_schet(c,self.x): #  проверяем что счетчик не вышел за пределы указанного пользователем кол-во чисел
+            if self.sravnenie_schet(z, self.y): #  проверяем что число в ячейки  z больше y
+                self.write_memory(self.y,self.read_memory(z)) #  если это так то меняем их местами
             self.write_memory(z,self.read_memory(self.read_memory(c)) )  #  записываем в ячейку z следующее значение последовательности 
-            self.control_number() #  делаем рекурсию 
-        if self.sravnenie_schet(z,y): #  если счетчик вышел за пределы и ячейка z больше y меняем их местами 
-            self.write_memory(y,self.read_memory(z))
+            self.control_number(z,c) #  делаем рекурсию 
+        if self.sravnenie_schet(z,self.y): #  если счетчик вышел за пределы и ячейка z больше y меняем их местами 
+            self.write_memory(self.y,self.read_memory(z))
         #  в итоге ответ будет в ячейке y 
 
     def sravnenie_schet(self,x,y ): # 9
@@ -436,17 +443,20 @@ def main():
     # далее значения которые нужно поместить на вход операции ,
     # у всех он разный 
 
-    cpu.program(0,'1x0')#  1x0
-    cpu.program(1,'7x98x1') # 7x98x1
+    cpu.program(0,'1x0x0')#  1x0
+    cpu.program(1,'7x98x1') # 7x98x1 # запись числа для промежуточного значения
 
-    cpu.program(2,'1x0') # 1x0
+    cpu.program(2,'1x0x0') # 1x0
     cpu.program(3,'8x98x97') # 8x98x97
 
-    cpu.program(4,'1x0') # 1x0
+    cpu.program(4,'1x0x0') # 1x0
     cpu.program(5,'2x99x97') # 2x99x97
 
-    cpu.program(6,'1x0') # 1x0
-    cpu.program(7,'5x0x99x98x97') # 5x0x99x98x97x
+    cpu.program(6,'1x0x0') # 1x0
+    cpu.program(7,'9x0x99') # 9x0x99 # где будет счетчик и ответ 
+
+    cpu.program(8,'1x0x0') # 1x0
+    cpu.program(9,'5x98x97') # 5x98x97 # где будет промежуточный результат и счетчик
 
     cpu.run()
 

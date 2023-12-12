@@ -2,7 +2,10 @@ import pygame as pg
 from heapq import *
 import inspect
 import pygame_menu as pm
-
+import numpy as np
+from queue import PriorityQueue
+import grid_helper as gh
+from pprint import pprint
 
 class Game:
 
@@ -24,6 +27,7 @@ class Game:
                           '22292777711144429221244',
                           '22922777222144422211944',
                           '22222777229111111119222']
+        self.grid_m= [  [j for j in i.replace('4','9') ] for i in self.grid_init]
         self.size_grid= {
             'Дорога':'1',
             'Пустошь':'2',
@@ -232,6 +236,40 @@ class Game:
                     visited[neigh_node] = cur_node
         return visited
 
+    def find_path_greedy(self, grid, start, end):
+       
+        self.pq = PriorityQueue() # приоритетная  очередь 
+        self.pq.put((0, start)) # начальнаякоордината 
+        self.start=start
+        self.goal=end
+        self.graph=grid
+        self.came_from = {self.start: None} # 
+        self.costs = {self.start: 0}
+
+        while not self.pq.empty():# 
+            current_pos = self.pq.get()[1]# 
+
+            if current_pos == self.goal:# 
+                break
+            print(self.graph)
+            # print(current_pos[0])
+            # print(current_pos[1])
+            neighbors = gh.get_neighbors(self.graph  , current_pos[0], current_pos[1])# 
+    
+            for neighbor in neighbors:# 
+
+                new_cost = self.costs[current_pos] + gh.get_cost(grid, neighbor)# 
+                # if neighbor not in self.costs or new_cost < self.costs[neighbor] :#  and neighbor not in self.came_from
+                print('neighbor',neighbor)
+                # print(' self.came_from', self.came_from)
+                if neighbor not in self.came_from:
+                    self.costs[neighbor] = new_cost
+                    priority = gh.heuristic_distance(neighbor, self.goal, type='m') # , type="m"
+                    self.pq.put((priority, neighbor))# 
+                    self.came_from[neighbor] = current_pos# 
+            self.queue = list(self.pq.queue)
+        return self.came_from
+
 
 class Menu:
     WIDTH, HEIGHT = 900, 600
@@ -349,12 +387,16 @@ if True:  # __name__ == "__main__"
         # draw path
         mouse_pos = game.get_click_mouse_pos() # выбор позиции 
         if mouse_pos:
-            visited = game.dijkstra(game.start, mouse_pos, game.graph)
+            # visited = game.dijkstra(game.start, mouse_pos, game.graph) # start, goal, graph
+            visited = game.find_path_greedy(start=game.start, end=mouse_pos, grid=game.grid_m) # start, goal, graph
+            
             game.set_abs_visited(visited)
             game.goal = mouse_pos
         path_head, path_segment = game.goal, game.goal
         while path_segment and path_segment in visited:
-            game.move_start(path_segment)
+            game.move_start(path_segment) # 
+          
             path_segment = game.get_visited(path_segment)
+         
         game.idk(path_head)
         game.ivent_game()
