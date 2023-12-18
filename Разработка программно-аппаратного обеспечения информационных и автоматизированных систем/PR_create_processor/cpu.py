@@ -1,5 +1,3 @@
-
-
 from time import time
 import time
 import pprint
@@ -7,18 +5,8 @@ from termcolor import colored, cprint
 from colored import fg
 from art import *
 
-def time_sleep():
-    # tprint('loading__CPU')
-    time.sleep(1)
-    print('...')
-    time.sleep(1)
-    print('...')
-    time.sleep(1)
-    print('...')
-    time.sleep(1)
 
     
-
 
 class CPU:
     """
@@ -26,6 +14,52 @@ class CPU:
         - характероне её отличие в том что памаять разделена на две части, одна для программы другая для данных
 
         Такой подход стабильнее, но не перезаписываем
+    """
+   
+    CONTROL_NUMBER= 'CONTROL_NUMBER'#  0x5  #  5
+    COMPARISON= 'COMPARISON' # 0x12  # 12
+    ADDW= 'ADDW'#  0x11  # 11
+    WRITE_ONE_READ= 'WRITE_ONE_READ'#  0x3 # 3
+    WRITE_DOUBLE_READ= 'WRITE_DOUBLE_READ'#  0x2  # 2
+    WRITE_MEMMORY= 'WRITE_MEMMORY'#  0x7   # 7
+    MEM_DATA ='MEM_DATA'#  0x100 # запись числа в память
+    
+  
+    write_double_read  =2  
+    write_one_read  =3 
+    control_number  =5  
+    write_mem = 7  
+    comparison  =12 
+    addw  =11 
+    mem_data  =100
+    """
+    -- Ответ будет в ячейки <99>
+    -- gромежуточный ответ в <91> 
+    -- Cчетчик будет в ячейке <90>
+    -- Ёще один счетчик в <89> ( сколько всего элементов )
+    -- Переход на нужную команду в <88>
+
+    MEM_DATA 0 3                    # Запись данных
+    MEM_DATA 1 3                    # Запись данных
+    MEM_DATA 2 10                   # Запись данных
+    MEM_DATA 3 2                    # Запись данных
+    WRITE_MEMMORY 99 0              # запись числа в память
+    WRITE_MEMMORY 90 0              # запись числа в память
+    WRITE_MEMMORY 91 0              # запись числа в память
+    WRITE_MEMMORY 92 0              # запись числа в память
+    WRITE_MEMMORY 89 0              # запись числа в память
+    WRITE_MEMMORY 88 8              # запись числа в память
+    WRITE_ONE_READ 89 0             # запись числа в <89> из ячейки <0>  
+    WRITE_ONE_READ 99 1             # запись числа в <99> из ячейки <1>  
+    ADDW  90 1                      #  увеличивает число из <90> на 1 
+    WRITE_DOUBLE_READ 91 90         # запись числа в 91 из значения полученного в ячейки <90>
+                                    # пример: a = [2,1,100]    a[a[2]] >> a[2]==2 >> a[2] ==100 
+    COMPARISON 91 99                # если число в <91> больше чем в <99> перезаписываем <99> ячейку значением из <91>
+    CONTROL_NUMBER 90 1             # если число из ячейки <90> меньше чем число в ячейки <89> 
+                                    # то 'pc' становится значением из ячейки <88>  
+    
+
+
     """
 
     def __init__(self):
@@ -45,7 +79,7 @@ class CPU:
 
     def memmory_programm(self):  # создаем память для программы
         for i in range(self.MAX_MEM):
-            self.mem_prog.insert(i, '0x0')
+            self.mem_prog.insert(i, '000000000000000000')
         
 
     def memmory_data(self):  # создаем папять для данных
@@ -108,163 +142,77 @@ class CPU:
 
     def fetch(self):  # метод для обработки циклов выборки
         temp= self.read_prog(self.pc)
-        temp=temp.split('x')
-        self.instr = int(temp[0])
-        self.tuple_args=tuple([int(i) for i in temp[1:] ])
+        self.instr = int(temp[:4], 2)
+        self.tuple_args=tuple([int(temp[4:11], 2) , int(temp[11:], 2) ])
         self.pc += 1  # переходим к следующей команде
      
 
-    def decode1(self): # метод для декодирования 
-        """
-        Проверить, находится ли значение инструкции в определенном диапазоне.
-
-        Например, значение инструкции в диапазоне от 0 до 99 будет указывать, что инструкция является NOP или инструкцией без операции. 
-
-        Если значение инструкции находится в диапазоне от 100 до 199, то это должна быть инструкция LDA или «Загрузка аккумулятора».
-        """
-        if self.instr in range(0, 100):
-            self.opcode = 0
-            self.operand = self.instr
-            self.nop()
-
-        elif self.instr in range(100, 200):
-            self.opcode = 1
-            self.operand = self.instr - 100
-            self.lda()
-
-        elif self.instr in range(200, 300):
-            self.opcode = 2
-            self.operand = self.instr - 200
-            self.sta()
-
-        elif self.instr in range(300, 400):
-            self.opcode = 3
-            self.operand = self.instr - 300
-            self.and_()
-
-        elif self.instr in range(400, 500):
-            self.opcode = 4
-            self.operand = self.instr - 400
-            self.or_()
-
-        elif self.instr in range(500, 600):
-            self.opcode = 5
-            self.operand = self.instr - 500
-            self.not_()
-
-        elif self.instr in range(600, 700):
-            self.opcode = 6
-            self.operand = self.instr - 600
-            self.add()
-
-        elif self.instr in range(700, 800):
-            self.opcode = 7
-            self.operand = self.instr - 700
-            self.sub()
-
-        elif self.instr in range(800, 900):
-            self.opcode = 8
-            self.operand = self.instr - 800
-            self.brz()
-
-
-        elif self.instr in range(900, 1000):
-            self.opcode = 9
-            self.operand = self.instr - 900
-            self.brp()
-
-        else:
-            raise ValueError("Неизвестаный код операции")
-
-        pass
-
-
-        # методы для выполнение команд
-    
-
     def decode(self):
-      
+        
         if self.instr==1:
-            self.fetch()
-            if self.instr==1:
-                # self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
-                self.opcode = 1
-                self.operand = self.instr
-                self.add()
-                return
-            if self.instr==2:
-                # self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
-                self.opcode = 2
-                self.operand = self.instr
-                x,y=self.tuple_args
-                self.write_first(x,y)
-                return
-            if self.instr==3:
-                # self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
-                self.opcode = 3
-                self.operand = self.instr
-                x,y= self.tuple_args
-                self.write_number(x,y)
-                return
-            if self.instr==4:
-                # self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
-                self.opcode = 4
-                self.operand = self.instr
-                self.up_schet()
-                return
-            if self.instr==5:
-                # self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
-                self.opcode = 5
-                self.operand = self.instr
-                step=1
-               
-                z=-2
-                c=-3
-                try:
-                    z,c,step=self.tuple_args
-                except:
-                    try:
-                        z,c=self.tuple_args
-                    except:
-                        ...
-                self.control_number(z,c,step)
-                return
-            if self.instr==6:
-                # self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
-                self.opcode = 6
-                self.operand = self.instr
-                x,y=self.tuple_args
-                self.sravnenie(x,y)
-                return
-            if self.instr==7:
-                # self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
-                self.opcode = 7
-                self.operand = self.instr
-                x,y=self.tuple_args
-                self.write_schetchick(x,y)
-                return
-            if self.instr==8:
-                # self.program(self.pc-1, self.read_prog(self.pc-1) +self.read_prog(self.pc-2) )
-                self.opcode = 8
-                self.operand = self.instr
-                x,y=self.tuple_args
-                self.write_number(x,self.read_memory(y))
-                return
-            if self.instr==9:# где будет хранится ответ
-                self.opcode = 9
-                self.operand = self.instr
-                x,y=self.tuple_args
-                self.x,self.y= x,y
-                # self.write_number(self.x,self.read_memory(self.y))
-                return
-            
+            self.opcode = 1
+            self.operand = self.instr
+            self.add()
+            return
+        if self.instr==2:
+            self.opcode = 2
+            self.operand = self.instr
+            x,y=self.tuple_args
+            self.write_double_read_d(x,y)
+            return
+        if self.instr==3:
+            self.opcode = 3
+            self.operand = self.instr
+            x,y= self.tuple_args
+            self.write_one_read_d(x,y)
+            return
+        if self.instr==4:
+            self.opcode = 4
+            self.operand = self.instr
+            self.up_schet()
+            return
+        if self.instr==5:
+            self.opcode = 5
+            self.operand = self.instr
+            z,c=self.tuple_args
+            self.control_number_d(z,c)
+            return
+        if self.instr==6:
+            self.opcode = 6
+            self.operand = self.instr
+            x,y=self.tuple_args
+            self.sravnenie_d(x,y)
+            return
+        if self.instr==7:
+            self.opcode = 7
+            self.operand = self.instr
+            x,y=self.tuple_args
+            self.write_memory_d(x,y)
+            return
+        if self.instr==8:
+            self.opcode = 8
+            self.operand = self.instr
+            x,y=self.tuple_args
+            self.write_number_d(x,self.read_memory(y))
+            return
+        if self.instr==11:
+            self.opcode = 11
+            self.operand = self.instr
+            c,step=self.tuple_args
+            self.addw_d(c,step)
+            return
+        if self.instr==12:
+            self.opcode = 12
+            self.operand = self.instr
+            z,y=self.tuple_args
+            self.comparison_d(z,y)
+            return
         if self.instr==0:
             self.halt()
         else:
             raise ValueError("Неизвестаный код операции")
         
 
-    
     def nop(self): # метод пустоты
         if not self.opcode == 0:
             raise ValueError(f"Недопустимый код операции, ожидается: 0 получено: {self.opcode}")
@@ -293,60 +241,34 @@ class CPU:
 
     def or_(self):
         pass
-    def not_(self):
-        pass
 
-    def add(self, x=0, y=1,z=2): # сумма (полная шляпа это вообще не мое задание , случайно сделал )
-        while self.read_memory(x) != 0:
-            self.test_opcode(y) # проверка 
-            self.test_operand() # проверка 
-            value = self.read_memory(y) # читаем список значений из памяти 
-            all_sum= value[-(self.read_memory(x))]+self.read_memory(z) # 
-            self.write_memory(z,all_sum) 
-            self.write_memory(x,self.read_memory(x)-1)
-            # получаем из нулевой ячкйки памяти значение (кол-во элементов )
-            # получаем список чесиле
-            # суммируем значение которое лежит в ячейки пяти три , с число 
-            # так как в ячейки два лежит список, и нам нужно понимать какой элемент мы суммируем
-            # то мы дуем уменьшать число в нулевой ячейки для того чтобы поремещатться по массиму 
-            # и забирать из него значения
-            # дальше просто уменьшаем кол-во элементов в первой ячейки данные на 1 
-            # и перезаписываем ее обратно, а сумму записываем в ячейку три      
-            # заканчиваем суммироватьт
-        self.halt()
-    
-    def write_schetchick(self, x,y):
-        # присваиваем счетчику 1 так как числа начиаются с первой ячейки # 7
+    def not_(self):
+        pass   
+
+    def write_memory_d(self,x,y):
         self.write_memory(x,y)
 
-
-    def write_first(self,x,y): 
+    def write_double_read_d(self,x,y): 
         # запись число !первое!   #2
         self.write_memory(x,self.read_memory(self.read_memory(y)))# счетчик массива
 
-    def write_number(self, x,y): 
+    def write_one_read_d(self, x,y): 
         # запись число  #3 
         self.write_memory(x,self.read_memory(y))# счетчик массива 
 
-   
-
-    def control_number(self, z=-2,c=-3, step=1): # 5
-        
-        # сложно для чтения (sry
-        # максимальное число в последовательности 
-        # используются самые простые операции запись чтение и сравнение сумма для счетчика  и рекурсия 
+    def addw_d(self,c, step=1): #11
         self.write_memory(c, self.add_m(self.read_memory(c),step)) # увеличиваем значение счетчика на 1
-        if not self.sravnenie_schet(c,self.x): #  проверяем что счетчик не вышел за пределы указанного пользователем кол-во чисел
-            if self.sravnenie_schet(z, self.y): #  проверяем что число в ячейки  z больше y
-                self.write_memory(self.y,self.read_memory(z)) #  если это так то меняем их местами
-            self.write_memory(z,self.read_memory(self.read_memory(c)) )  #  записываем в ячейку z следующее значение последовательности 
-            self.control_number(z,c) #  делаем рекурсию 
-        if self.sravnenie_schet(z,self.y): #  если счетчик вышел за пределы и ячейка z больше y меняем их местами 
-            self.write_memory(self.y,self.read_memory(z))
-        #  в итоге ответ будет в ячейке y 
+ 
+    def comparison_d(self, z,y): #12 # 
+        if self.comparison_schet(z,y): #  если счетчик вышел за пределы и ячейка z больше y меняем их местами 
+            self.write_memory(y,self.read_memory(z))
 
-    def sravnenie_schet(self,x,y ): # 9
-        return True if self.read_memory(x)>self.read_memory(y) else False # -3 0
+    def control_number_d(self, z=-2,c=-3, step=1): # 5   #  RCR - проверка числа лежащее в ячейки 'с' число на которое нужно увеличить первое значение чтобы сравнить второе число в ячейки 'c+n' и вызвать команду 'c+n+n'        
+        if  not self.comparison_schet(z,z-c): 
+            self.pc=self.read_memory(z-c-c)
+       
+    def comparison_schet(self,x,y ): # 9
+        return True if self.read_memory(x)>=self.read_memory(y) else False # -3 0
         
     def sub(self): 
         # вычитание
@@ -355,13 +277,11 @@ class CPU:
         value = self.read_memory(self.operand)
         self.update_acc(self.acc - value)
         
-    def add_m(self, x,y):
+    def add_m(self, x,y): # 16
         return x+y
-
 
     def brz(self):
         pass
-    
     
     def brp(self):
         # IFF последняя операция оставила установленным флаг нуля,
@@ -374,12 +294,13 @@ class CPU:
 
 
     def trace(self):
-        color = fg('green')
+        color = fg('red')
         # # Отображение процессора и памяти
-        # print( fg('red') + f'Opcode: {self.opcode}, Operand: {self.operand}')
         print( color + f"ACC: {self.acc}, PC: {self.pc}, Z: {self.zero_flag}, P: {self.pos_flag}")
         print( color + f"ROM: {self.mem_prog}")
-        print( color + f"MEM: {self.mem_data}")
+        color = fg('green')
+        print(color+'')
+        print( f"MEM: {self.mem_data}")
         print( fg('white') +'')
 
     def step(self):
@@ -389,149 +310,127 @@ class CPU:
             self.trace()
     
     def run(self):
-        self.debug = True
+        self.debug = False
         while not self.halted:
             self.step()
         self.debug = True
-
+        self.step()
     def halt(self):
         self.halted = True
 
 
 
+def read_text():
+    file_path = 'C:\\Users\\Дмитрий\\Desktop\\МАГИСТР\\MagiCtr\\Разработка программно-аппаратного обеспечения информационных и автоматизированных систем\\PR_create_processor\\test.txt'
 
-
-def program_iterations(cpu=None, iterations=1):
-
-    while iterations > 0:
-        cpu.step()
-        print("00    LDA  0")
-        cpu.step()
-        print("01    SUB  1")
-        cpu.step()
-        print("02    STA  3")
-        print("--- Loop ---")
-        iterations -= 1
-
+    f = open(file_path, 'r+')
+    lines = [line.replace("\n", "").strip() for line in f.readlines()]   
+    return lines
+    
 
 def main():
     #двухадресная команда add x, y (сложить содержимое ячеек x и y, а результат поместить в ячейку y)
     # архитектура гарвардская 
-    # 
-    """
-    Последовательность команд :
-    7,8,2,4,5,4,8 ,5,4,8 ,5,4,8 ,5,4,8 ... столько раз сколько чисел в списке
-    """
-    cpu = CPU()    # 5
 
+    cpu = CPU()    # 5
     cpu.cold_start() # создание памяти  
     cpu.reset()     # Сброс должен быть вызван перед любым доступом к памяти  
-    cpu.mem_data[0] = 8  # Сохраняем данные для загрузки в аккумулятор  # кол-во данных в массиве
+    a=0
+    for i in read_text():
+        command=i.upper().split(' ')
+        for i in command: 
+            if i =='': command.remove(i)
+        if command[0]==CPU.MEM_DATA:
+            cpu.mem_data[int(command[1])] = int(command[2])
+        if command[0]==CPU.CONTROL_NUMBER:
+            cpu.program(a, f"{cpu.control_number:b}".rjust(4,'0')+f"{int(command[1]):b}".rjust(7,'0') +f"{int(command[2]):b}".rjust(7,'0'))
+            a+=1
+        if command[0]==CPU.COMPARISON:
+            cpu.program(a, f"{cpu.comparison:b}".rjust(4,'0')+f"{int(command[1]):b}".rjust(7,'0') +f"{int(command[2]):b}".rjust(7,'0'))
+            a+=1
+        if command[0]==CPU.ADDW:
+            cpu.program(a, f"{cpu.addw:b}".rjust(4,'0')+f"{int(command[1]):b}".rjust(7,'0') +f"{int(command[2]):b}".rjust(7,'0'))
+            a+=1
+        if command[0]==CPU.WRITE_ONE_READ:
+            cpu.program(a, f"{cpu.write_one_read:b}".rjust(4,'0')+f"{int(command[1]):b}".rjust(7,'0') +f"{int(command[2]):b}".rjust(7,'0'))
+            a+=1
+        if command[0]==CPU.WRITE_DOUBLE_READ:
+            cpu.program(a, f"{cpu.write_double_read:b}".rjust(4,'0')+f"{int(command[1]):b}".rjust(7,'0') +f"{int(command[2]):b}".rjust(7,'0'))
+            a+=1
+        if command[0]==CPU.WRITE_MEMMORY:
+            cpu.program(a, f"{cpu.write_mem:b}".rjust(4,'0')+f"{int(command[1]):b}".rjust(7,'0') +f"{int(command[2]):b}".rjust(7,'0'))
+            a+=1
+
+        
+        
+    
+    # cpu.mem_data[0] = 8  # Сохраняем данные для загрузки в аккумулятор  # кол-во данных в массиве
     
 
-    cpu.mem_data[1] =1000
-    cpu.mem_data[2]=10
-    cpu.mem_data[3]=3
-    cpu.mem_data[4]=444
-    cpu.mem_data[5]=5
-    cpu.mem_data[6]=6
-    cpu.mem_data[7]=7
-    cpu.mem_data[8]=555
+    # cpu.mem_data[1] =1000
+    # cpu.mem_data[2]=10
+    # cpu.mem_data[3]=3
+    # cpu.mem_data[4]=444
+    # cpu.mem_data[5]=5
+    # cpu.mem_data[6]=6
+    # cpu.mem_data[7]=7
+    # cpu.mem_data[8]=555
 
 
-    # на вход индекс первое отвечает за номер операции , 
-    # далее значения которые нужно поместить на вход операции ,
-    # у всех он разный 
+    # # на вход индекс первое отвечает за номер операции , 
+    # # далее значения которые нужно поместить на вход операции ,
+    # # у всех он разный 
+    # # 99  - 1100011
+    # #98 - 1100010
+    # #97 -1100001
+    # # 1
 
-    cpu.program(0,'1x0x0')#  1x0
-    cpu.program(1,'7x98x1') # 7x98x1 # запись числа для промежуточного значения
+    # # 7 -111
+    # """
+    # 5 - 0101
+    # 8 - 1000
+    # 9-  1001
+    # 10
+    # 11 - 1011
+    # 12 - 1100
+    # 13
+    # """
+    
+    # cpu.program(0,'000100000000000000')#  1x0  0001.1100011.1100011
+    # cpu.program(1,'011111000100000001') # 7x98x1 # запись числа для промежуточного значения
 
-    cpu.program(2,'1x0x0') # 1x0
-    cpu.program(3,'8x98x97') # 8x98x97
+    # cpu.program(2,'000100000000000000') # 1x0
+    # cpu.program(3,'100011000101100001') # 8x98x97  # запись первого числа 
 
-    cpu.program(4,'1x0x0') # 1x0
-    cpu.program(5,'2x99x97') # 2x99x97
+    # cpu.program(4,'000100000000000000') # 1x0
+    # cpu.program(5,'001011000111100001') # 2x99x97 # запись счетчика массива 
 
-    cpu.program(6,'1x0x0') # 1x0
-    cpu.program(7,'9x0x99') # 9x0x99 # где будет счетчик и ответ 
+    # cpu.program(6,'000100000000000000') # 1x0
+    # cpu.program(7,'100100000001100011') # 9x0x99 # где будет счетчик и ответ 
 
-    cpu.program(8,'1x0x0') # 1x0
-    cpu.program(9,'5x98x97') # 5x98x97 # где будет промежуточный результат и счетчик
+    # # cpu.program(8,'000100000000000000') # 1x0
+    # # cpu.program(9,'5x98x97') # 5x98x97 # где будет промежуточный результат и счетчик
+
+
+    # cpu.program(8,'000100000000000000') # 1x0
+    # cpu.program(9,'101111000010000001') # переход на след число цикла
+
+    # cpu.program(10,'000100000000000000') # 1x0
+    # cpu.program(11,'110011000101100011') # сравниваем
+
+    # cpu.program(12,'000100000000000000') # 1x0
+    # cpu.program(13,'001011000101100001') # записываем след число в ram
+
+    # cpu.program(14,'000100000000000000') # 1x0
+    # cpu.program(15,'010100010001100001') # 5x8(число оператора который нужно повторить)x97 # где будет промежуточный результат и счетчик
+
+    # cpu.program(16,'000100000000000000') # 1x0
+    # cpu.program(17,'110011000101100011') # # 12x98x99 сравниваем
 
     cpu.run()
 
     
-    
-    
-def main_second():
 
-    cpu=CPU()
-
-    cpu.memmory_programm()
-
-    cpu.reset()     # Сброс должен быть вызван перед любым доступом к памяти  
-    cpu.mem_data[2] = 7  # Сохраняем данные для загрузки в аккумулятор 
-    cpu.mem_data[3] = 10
-    cpu.program(0, 102)
-    cpu.program(1, 201)
-    cpu.program(2, 303)
-    cpu.program(3, 900)
-
-
-    cpu.fetch()
-    cpu.decode()   
-
-    cpu.fetch()
-    cpu.decode()   
-
-    cpu.fetch()
-    cpu.decode()  
-
-    cpu.fetch()
-    cpu.decode()   
-    
-    color ='1' #fg('white')
-        # # Отображение процессора и памяти
-    print( color + f'Opcode: {cpu.opcode}, Operand: {cpu.operand}')
-    print( color + f"ACC: {cpu.acc}, PC: {cpu.pc}, Z: {cpu.zero_flag}, P: {cpu.pos_flag}")
-    print( color + f"ROM: {cpu.mem_prog}")
-    print( color + f"MEM: {cpu.mem_data}")
-
-
-def test_main(cpu=None, iterations=1):
-
-    cpu=CPU()
-
-    cpu.memmory_programm()
-
-    cpu.reset() 
-
-    cpu.mem_data[0] = 9  # Сохраняем данные для загрузки в аккумулятор 
-    cpu.mem_data[1] = 6
-    cpu.mem_data[2] = 0
-
-    cpu.program(0, 100)     # LDA 0
-    cpu.program(1, 701)     # SUB 1
-    cpu.program(2, 203)     # STA 3
-
-    cpu.debug = True
-    program_iterations(cpu, iterations)
-
-
-# test_main()
 if __name__ == '__main__':
     main()
 
-
-
-
-# while self.read_memory(0) != 0:
-   
-            
-
-#             value = self.read_memory(1) # читаем список значений из памяти 
-#             max_data =self.read_memory(2) # максимальный элемент
-     
-#             data_max_now=value[-(self.read_memory(0))]   if  value[-(self.read_memory(0))] > self.read_memory(2) else self.read_memory(2)
-#             self.write_memory(2,data_max_now) 
-#             self.write_memory(0,self.read_memory(0)-1)
