@@ -7,6 +7,134 @@ from queue import PriorityQueue
 import grid_helper as gh
 from pprint import pprint
 
+
+'''
+
+Напиши код на python который показывает работу алгоритма Беллмана-Форда, 
+обязательно с реализацией отрицательных весов во взвешенном графе  для прохождением лабиринта . 
+Лабиринт в исходном виде состоит из вложенных списков , в котором указаны веса каждой из точек.
+Найти кратчайший путь введенный пользователем в этом лабиринте.
+Программа так же должна выводить все варианты путей до конечной точки и отдельно выводила самый кратчайший путью.
+Пришли код программы  одним сообщением , перед отправкой проверь на работоспособность , вводя в качестве тестовых значений случайные числа от 0 до 4, 
+если выявится ошибка в ходе выполнения этих тестов , исправь код , проверь еще раз и пришли код одним сообщением.
+
+'''
+
+class Graph:
+    def __init__(self, maze):
+        self.maze = maze
+        self.rows = len(maze)
+        self.cols = len(maze[0])
+        self.V = self.rows * self.cols
+        self.graph = []
+
+    def add_edge(self, u, v, w):
+        self.graph.append([u, v, w])
+
+    def convert_to_vertex(self, i, j):
+        return i * self.cols + j
+
+    def bellman_ford(self, src, dest):
+        dist = [float("Inf")] * self.V
+        dist[src] = 0
+
+        for _ in range(self.V - 1):
+            for i in range(self.rows):
+                for j in range(self.cols):
+                    u = self.convert_to_vertex(i, j)
+                    if i > 0:
+                        v = self.convert_to_vertex(i - 1, j)
+                        w = self.maze[i - 1][j]
+                        if dist[u] != float("Inf") and dist[u] + w < dist[v]:
+                            dist[v] = dist[u] + w
+                    if i < self.rows - 1:
+                        v = self.convert_to_vertex(i + 1, j)
+                        w = self.maze[i + 1][j]
+                        if dist[u] != float("Inf") and dist[u] + w < dist[v]:
+                            dist[v] = dist[u] + w
+                    if j > 0:
+                        v = self.convert_to_vertex(i, j - 1)
+                        w = self.maze[i][j - 1]
+                        if dist[u] != float("Inf") and dist[u] + w < dist[v]:
+                            dist[v] = dist[u] + w
+                    if j < self.cols - 1:
+                        v = self.convert_to_vertex(i, j + 1)
+                        w = self.maze[i][j + 1]
+                        if dist[u] != float("Inf") and dist[u] + w < dist[v]:
+                            dist[v] = dist[u] + w
+
+        return {'1':dist[dest], '2':dist}
+    
+    def get_shortest_path(self, src, dest, dist, path, shortest_path, current_path):
+        if src == dest:
+            current_path.append(dest)
+            if dist[dest] < shortest_path[0]:
+                shortest_path[0] = dist[dest]
+                shortest_path[1] = current_path.copy()
+            return #(src, dest, dist, path, shortest_path, current_path)
+
+        for edge in self.graph:
+            u, v, w = edge
+            if dist[u] != float("Inf") and dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
+                path[v] = u
+                self.get_shortest_path(u, dest, dist, path, shortest_path, current_path)
+                dist[v] = float("Inf")
+                path[v] = -1
+        
+    def print_all_paths(self, paths):
+        for i in range(len(paths)):
+            print(f"Путь {i + 1}: {paths[i]}")
+
+    def find_shortest_path(self, src, dest, dist):
+        # dist = [float("Inf")] * self.V
+        # dist[src] = 0
+        print(dist)
+        path = [-1] * self.V
+        shortest_path = [float("Inf"), []]
+        current_path = []
+
+        # src, dest, dist, path, shortest_path, current_path =
+        self.get_shortest_path(src, dest, dist, path, shortest_path, current_path)
+
+        # paths = []
+        temp_dest = dest
+        while temp_dest != -1:
+            path.append(temp_dest)
+            temp_dest = path[temp_dest]
+
+        path.reverse()
+        self.print_all_paths(path)
+        print(f"Самый кратчайший путь: {shortest_path[1]}, длина: {shortest_path[0]}")
+
+# Пример лабиринта (матрица с весами каждой точки)
+maze = [
+    [1, 3, 1, 2],
+    [2, 4000, 1000, 5],
+    [5, 10000, 2, 3],
+    [6, 2000, 4, 7]
+]
+
+# Создаем граф на основе лабиринта
+g = Graph(maze)
+
+# Получаем координаты начальной и конечной точек от пользователя
+start_i, start_j = map(int, input("Введите координаты начальной точки (номер строки и номер столбца через пробел): ").split())
+end_i, end_j = map(int, input("Введите координаты конечной точки (номер строки и номер столбца через пробел): ").split())
+
+
+# Запускаем алгоритм Беллмана-Форда для поиска кратчайшего пути
+src = g.convert_to_vertex(start_i, start_j)
+dest = g.convert_to_vertex(end_i, end_j)
+print(dest)
+shortest_path_length = g.bellman_ford(src, dest)
+g.find_shortest_path(src, dest, shortest_path_length['2'])
+print(f"Кратчайший путь от начальной до конечной точки: {shortest_path_length}")
+# # Запускаем алгоритм для поиска всех путей и кратчайшего пути
+# src = g.convert_to_vertex(start_i, start_j)
+# dest = g.convert_to_vertex(end_i, end_j)
+# g.find_shortest_path(src, dest)
+
 class Game:
 
     cols, rows = 23, 13
@@ -62,7 +190,11 @@ class Game:
         self.visited = {self.start: None}
 
         self.bg = pg.image.load(
-            r'c:\\Users\\Admin\\Desktop\\VS_code\\magic\\MagiCtr\\КР_Системный анализ информационных технологий\\Python-Dijkstra-BFS-A-star-master\\img\\2.png').convert()
+            r'c:\\Users\\Дмитрий\\Desktop\\МАГИСТР\\MagiCtr\\КР_Системный анализ информационных технологий\\Python-Dijkstra-BFS-A-star-master\\img\\2.png').convert()
+
+        #    C:\Users\Дмитрий\Desktop\МАГИСТР\MagiCtr\КР_Системный анализ информационных технологий\main_file.py
+            # r'c:\\Users\\Admin\\Desktop\\VS_code\\magic\\MagiCtr\\КР_Системный анализ информационных технологий\\Python-Dijkstra-BFS-A-star-master\\img\\2.png').convert()
+
         self.bg = pg.transform.scale(
             self.bg, (Game.cols * Game.TILE, Game.rows * Game.TILE))
 
@@ -245,29 +377,37 @@ class Game:
         self.graph=grid
         self.came_from = {self.start: None} # 
         self.costs = {self.start: 0}
-
+        print(start)
+        print({self.start: None})
+        print({self.start: 0})
+        print(end)
         while not self.pq.empty():# 
+            # print('self.pq.queue>>>',list(self.pq.queue))
             current_pos = self.pq.get()[1]# 
+            print('current_pos',current_pos, 'list', list(self.pq.queue))
 
             if current_pos == self.goal:# 
                 break
-            print(self.graph)
-            # print(current_pos[0])
-            # print(current_pos[1])
+            # print('len(self.graph)',len(self.graph))
+            # print('len(self.graph)[01]',len(self.graph[0]))
             neighbors = gh.get_neighbors(self.graph  , current_pos[0], current_pos[1])# 
     
             for neighbor in neighbors:# 
-
+                neigh_cost, neigh_node = neighbor
                 new_cost = self.costs[current_pos] + gh.get_cost(grid, neighbor)# 
                 # if neighbor not in self.costs or new_cost < self.costs[neighbor] :#  and neighbor not in self.came_from
-                print('neighbor',neighbor)
-                # print(' self.came_from', self.came_from)
+                # print('neighbor',neighbor)
+                
                 if neighbor not in self.came_from:
+                    # print('self.came_from',self.came_from)
+                    
+                    print('neighbor',neighbor, 'neighbors', neighbors)
                     self.costs[neighbor] = new_cost
                     priority = gh.heuristic_distance(neighbor, self.goal, type='m') # , type="m"
                     self.pq.put((priority, neighbor))# 
                     self.came_from[neighbor] = current_pos# 
             self.queue = list(self.pq.queue)
+        print('self.pq.empty()',self.pq.empty())
         return self.came_from
 
 
@@ -348,7 +488,7 @@ class Menu:
 # menu.show_menu()
 
 
-if True:  # __name__ == "__main__"
+if False:  # __name__ == "__main__"
     game = Game()
     while_true = False
     temp = game.custom_map()

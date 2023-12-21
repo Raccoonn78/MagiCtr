@@ -131,26 +131,20 @@ def get_cost(grid, pos):
 def get_neighbors(grid,  col,row):
     height = len(grid)  # 13  
     width = len(grid[0]) # 23 
-    print('height',height)
-    print('width',width)
+  
     neighbors = [( col ,row + 1), ( col - 1, row), (col, row - 1), ( col + 1, row)]
 
     # make path nicer
-    # if (row + col) % 2 == 0:
-    #     neighbors.reverse()
+    if (row + col) % 2 == 0:
+        neighbors.reverse()
 
     # check borders
-    print('neighbors',neighbors)
-    print('row',row)
-    print('col',col)
-
+ 
     neighbors = list(filter(lambda t: (0 <= t[0] <height  and 0 <= t[1] < width), neighbors))
     # check obstacles
-    print('neighbors_2',list(neighbors))
-    print(grid)
-    print(list(neighbors))
+  
     neighbors = list(filter(lambda t: (grid[t[0]][t[1]] != OBSTACLE_COL), neighbors))
-    print('neighbors_3',list(neighbors))
+    # print('neighbors_3',list(neighbors))
 
     return neighbors
 
