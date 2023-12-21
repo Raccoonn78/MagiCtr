@@ -1,5 +1,8 @@
 def bellman_ford(grid, start, end):
     rows, cols = len(grid), len(grid[0])
+    print('rows',rows)
+    print('cols',cols)
+    print(grid)
     distance = [[float('inf')] * cols for _ in range(rows)]
     path = [[None] * cols for _ in range(rows)]
 
@@ -13,11 +16,17 @@ def bellman_ford(grid, start, end):
                     continue
 
                 neighbors = [(i-1, j), (i+1, j), (i, j-1), (i, j+1)]
+                for xx,yy in [(i-1, j), (i+1, j), (i, j-1), (i, j+1)]:
+                    if 0 <= xx < rows and 0 <= yy < cols :
+                        if  grid[xx][yy]=='#':
+                            neighbors.remove((xx,yy))
                 for ni, nj in neighbors:
-                    if 0 <= ni < rows and 0 <= nj < cols:
-                        if distance[i][j] + grid[ni][nj] < distance[ni][nj]:
-                            distance[ni][nj] = distance[i][j] + grid[ni][nj]
-                            path[ni][nj] = (i, j)
+                    if   0 <= ni < rows and 0 <= nj < cols :
+                        # print(grid[ni][nj]  ,grid[ni][nj]!='#' )
+                        # if grid[ni][nj]!='#' : 
+                            if   distance[i][j] + grid[ni][nj] < distance[ni][nj]:
+                                distance[ni][nj] = distance[i][j] + grid[ni][nj]
+                                path[ni][nj] = (i, j)
 
     # Check for negative cycles
     for i in range(rows):
@@ -26,16 +35,24 @@ def bellman_ford(grid, start, end):
                 continue
 
             neighbors = [(i-1, j), (i+1, j), (i, j-1), (i, j+1)]
+            for xx,yy in [(i-1, j), (i+1, j), (i, j-1), (i, j+1)]:
+                    if 0 <= xx < rows and 0 <= yy < cols :
+                        if  grid[xx][yy]=='#':
+                            neighbors.remove((xx,yy))
             for ni, nj in neighbors:
-                if 0 <= ni < rows and 0 <= nj < cols:
-                    if distance[i][j] + grid[ni][nj] < distance[ni][nj]:
-                        raise ValueError("Graph contains a negative cycle")
+                if  0 <= ni < rows and 0 <= nj < cols:
+                    # print(grid[ni][nj], grid[ni][nj]!='#' )
+                    # if grid[ni][nj]!='#' : 
+                        if  distance[i][j] + grid[ni][nj] < distance[ni][nj]:
+                            raise ValueError("Graph contains a negative cycle")
 
     # Reconstruct the path
     shortest_path = []
     current = end
+    print('current',current)
     while current is not None:
         shortest_path.append(current)
+        
         current = path[current[0]][current[1]]
     shortest_path.reverse()
 
@@ -73,12 +90,12 @@ end_point = (11, 20)
 # start_point = (0, 0)
 # end_point = (4, 2)
 
-try:
-    shortest_distance, all_paths = bellman_ford(maze, start_point, end_point)
-    print(f"Shortest Distance: {shortest_distance}")
-    print_paths(all_paths)
-except ValueError as e:
-    print(e)
+# try:
+#     shortest_distance, all_paths = bellman_ford(maze, start_point, end_point)
+#     print(f"Shortest Distance: {shortest_distance}")
+#     print_paths(all_paths)
+# except ValueError as e:
+#     print(e)
 
 
 import pygame

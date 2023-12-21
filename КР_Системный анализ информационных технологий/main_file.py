@@ -6,7 +6,7 @@ import numpy as np
 from queue import PriorityQueue
 import grid_helper as gh
 from pprint import pprint
-
+from temp_temp_new import bellman_ford
 
 '''
 
@@ -27,6 +27,7 @@ class Graph:
         self.cols = len(maze[0])
         self.V = self.rows * self.cols
         self.graph = []
+        
 
     def add_edge(self, u, v, w):
         self.graph.append([u, v, w])
@@ -119,17 +120,17 @@ maze = [
 g = Graph(maze)
 
 # Получаем координаты начальной и конечной точек от пользователя
-start_i, start_j = map(int, input("Введите координаты начальной точки (номер строки и номер столбца через пробел): ").split())
-end_i, end_j = map(int, input("Введите координаты конечной точки (номер строки и номер столбца через пробел): ").split())
+# start_i, start_j = map(int, input("Введите координаты начальной точки (номер строки и номер столбца через пробел): ").split())
+# end_i, end_j = map(int, input("Введите координаты конечной точки (номер строки и номер столбца через пробел): ").split())
 
 
 # Запускаем алгоритм Беллмана-Форда для поиска кратчайшего пути
-src = g.convert_to_vertex(start_i, start_j)
-dest = g.convert_to_vertex(end_i, end_j)
-print(dest)
-shortest_path_length = g.bellman_ford(src, dest)
-g.find_shortest_path(src, dest, shortest_path_length['2'])
-print(f"Кратчайший путь от начальной до конечной точки: {shortest_path_length}")
+# src = g.convert_to_vertex(start_i, start_j)
+# dest = g.convert_to_vertex(end_i, end_j)
+# print(dest)
+# shortest_path_length = g.bellman_ford(src, dest)
+# g.find_shortest_path(src, dest, shortest_path_length['2'])
+# print(f"Кратчайший путь от начальной до конечной точки: {shortest_path_length}")
 # # Запускаем алгоритм для поиска всех путей и кратчайшего пути
 # src = g.convert_to_vertex(start_i, start_j)
 # dest = g.convert_to_vertex(end_i, end_j)
@@ -141,7 +142,7 @@ class Game:
     TILE = 70
 
     def __init__(self) -> None:
-
+        self.block_dict={}
         self.grid_init = ['22222222222222222222212',
                           '22222292222911112244412',
                           '22444422211112911444412',
@@ -155,6 +156,7 @@ class Game:
                           '22292777711144429221244',
                           '22922777222144422211944',
                           '22222777229111111119222']
+        self.maze=[  [int(j) for j in i] for i in self.grid_init]
         self.grid_m= [  [j for j in i.replace('4','9') ] for i in self.grid_init]
         self.size_grid= {
             'Дорога':'1',
@@ -184,14 +186,16 @@ class Game:
         self.start = (0, 7)
         self.goal = (0, 7)
         self.queue = []
+        self.block= [(-1,-1)]
+        self.unblock= (-1,-1)
 
         heappush(self.queue, (0, self.start))
         self.cost_visited = {self.start: 0}
         self.visited = {self.start: None}
 
-        self.bg = pg.image.load(
-            r'c:\\Users\\Дмитрий\\Desktop\\МАГИСТР\\MagiCtr\\КР_Системный анализ информационных технологий\\Python-Dijkstra-BFS-A-star-master\\img\\2.png').convert()
-
+        self.bg = pg.image.load(  
+            r'c:\\Users\\Admin\\Desktop\\VS_code\\magic\\MagiCtr\\КР_Системный анализ информационных технологий\\Python-Dijkstra-BFS-A-star-master\\img\\2.png').convert()
+        # c:\\Users\\Дмитрий\\Desktop\\МАГИСТР\\MagiCtr\\КР_Системный анализ информационных технологий\\Python-Dijkstra-BFS-A-star-master\\img\\2.png
         #    C:\Users\Дмитрий\Desktop\МАГИСТР\MagiCtr\КР_Системный анализ информационных технологий\main_file.py
             # r'c:\\Users\\Admin\\Desktop\\VS_code\\magic\\MagiCtr\\КР_Системный анализ информационных технологий\\Python-Dijkstra-BFS-A-star-master\\img\\2.png').convert()
 
@@ -208,12 +212,21 @@ class Game:
     def activate_game(self):
         self.sc.blit(self.bg, (0, 0))
         # draw BFS work
-        [pg.draw.rect(self.sc, pg.Color('forestgreen'),
+        [pg.draw.rect(self.sc, pg.Color('red'),
                       self.get_rect(x, y), 1) for x, y in self.visited]
         [pg.draw.rect(self.sc, pg.Color('darkslategray'),
                       self.get_rect(*xy)) for _, xy in self.queue]
         pg.draw.circle(self.sc, pg.Color('purple'),
                        *self.get_circle(*self.goal))
+        if self.block:
+            # print(self.block)
+            [pg.draw.circle(self.sc, pg.Color('black'),
+                        *self.get_circle(*xy))  for xy in self.block]
+            # [pg.draw.rect(self.sc, pg.Color('black'),
+            #           self.get_rect(*xy)) for  xy in self.block]
+            
+        # pg.draw.circle(self.sc, pg.Color('black'),
+        #                *self.get_circle(*self.block, 0))
 
         pass
 
@@ -270,7 +283,8 @@ class Game:
         
 
     @classmethod
-    def get_circle(cls, x, y):
+    def get_circle(cls, x, y, zero=None):
+        if zero: return (x * cls.TILE + cls.TILE // 2, y * cls.TILE + cls.TILE // 2),0
         return (x * cls.TILE + cls.TILE // 2, y * cls.TILE + cls.TILE // 2), cls.TILE // 4
 
     @classmethod
@@ -317,7 +331,7 @@ class Game:
         return heappop(self.get_queue())
 
     def move_start(self, path_segment):
-        pg.draw.circle(self.sc, pg.Color('brown'), *
+        pg.draw.circle(self.sc, pg.Color('red'), *
                        self.get_circle(*path_segment))
         path_segment = self.visited[path_segment]
 
@@ -331,7 +345,58 @@ class Game:
         pg.display.flip()
         self.clock.tick(7)
 
-    def get_click_mouse_pos(self):
+    def get_click_mouse_pos(self, butt):
+        click = pg.mouse.get_pressed()
+        x, y = pg.mouse.get_pos()
+        grid_x, grid_y = x // self.TILE, y // self.TILE
+        pg.draw.circle(self.sc, pg.Color('red'), * self.get_circle(grid_x, grid_y))
+
+        if click[0] and butt=="l":
+            x, y = pg.mouse.get_pos()
+            grid_x, grid_y = x // self.TILE, y // self.TILE
+            pg.draw.circle(self.sc, pg.Color('red'), *
+                        self.get_circle(grid_x, grid_y))
+            
+            # print('click',click)
+            return (grid_x, grid_y)
+        
+        if click[2] and butt=="r":
+            
+            x, y = pg.mouse.get_pos()
+            grid_x, grid_y = x // self.TILE, y // self.TILE
+            if (grid_x, grid_y) not in self.block:
+                pg.draw.circle(self.sc, pg.Color('black'), *
+                        self.get_circle(grid_x, grid_y))
+            
+            # print('click',click)
+            
+                self.block.append( (grid_x, grid_y))
+                self.block_dict[(grid_y,grid_x)]=self.maze[grid_y][grid_x]
+                self.maze[grid_y][grid_x]='#'
+                
+                return (grid_x, grid_y)
+            else:
+                return False
+        
+        if click[1] and butt=="m":
+            # img = pg.font.render(self., True, RED)
+            # rect = img.get_rect()
+            # pygame.draw.rect(img, BLUE, rect, 1)
+            
+            x, y = pg.mouse.get_pos()
+            grid_x, grid_y = x // self.TILE, y // self.TILE
+            if (grid_x, grid_y)  in self.block:
+                pg.draw.circle(self.sc, pg.Color('black'), *
+                            self.get_circle(grid_x, grid_y))
+                
+                # self.unblock = (grid_x, grid_y)
+                self.block.remove((grid_x, grid_y))
+                self.maze[grid_y][grid_x]=self.block_dict[(grid_y,grid_x)]
+                return (grid_x, grid_y)
+
+        return  False
+    
+    def get_click_right(self):
         x, y = pg.mouse.get_pos()
         grid_x, grid_y = x // self.TILE, y // self.TILE
         pg.draw.circle(self.sc, pg.Color('red'), *
@@ -488,7 +553,7 @@ class Menu:
 # menu.show_menu()
 
 
-if False:  # __name__ == "__main__"
+if True:  # __name__ == "__main__"
     game = Game()
     while_true = False
     temp = game.custom_map()
@@ -497,6 +562,8 @@ if False:  # __name__ == "__main__"
         while_true = True
         game.create_graph()
         visited = {game.start: None}
+    # maze = game.grid_init
+    # maze=[  [int(j) for j in i] for i in maze]
     print(temp['message'])
     """
         КУСТ 
@@ -525,17 +592,26 @@ if False:  # __name__ == "__main__"
         #             game.set_cost_visited(neigh_node, new_cost)
         #             game.set_visited(neigh_node, cur_node)
         # draw path
-        mouse_pos = game.get_click_mouse_pos() # выбор позиции 
+        
+        mouse_pos = game.get_click_mouse_pos('l') # выбор позиции 
+        mouse_right = game.get_click_mouse_pos('r') # выбор позиции
+        mouse_midle = game.get_click_mouse_pos('m') # выбор позиции
+
         if mouse_pos:
             # visited = game.dijkstra(game.start, mouse_pos, game.graph) # start, goal, graph
-            visited = game.find_path_greedy(start=game.start, end=mouse_pos, grid=game.grid_m) # start, goal, graph
+            # visited = game.find_path_greedy(start=game.start, end=mouse_pos, grid=game.grid_m) # start, goal, graph
+            print(game.maze)
+            shortest_distance, all_paths = bellman_ford(game.maze, game.start[::-1], mouse_pos[::-1])
             
+            visited={ all_paths[i][::-1]:all_paths[i+1][::-1]  for i in range(len(all_paths)-1) }
             game.set_abs_visited(visited)
             game.goal = mouse_pos
+            game.queue=[(i,all_paths[i][::-1]) for i in range(len(all_paths))]
+
         path_head, path_segment = game.goal, game.goal
         while path_segment and path_segment in visited:
             game.move_start(path_segment) # 
-          
+            # print('path_segment',path_segment)
             path_segment = game.get_visited(path_segment)
          
         game.idk(path_head)
