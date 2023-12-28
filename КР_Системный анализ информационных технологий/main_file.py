@@ -142,6 +142,7 @@ class Game:
     TILE = 70
 
     def __init__(self) -> None:
+        self.number_size=2
         self.block_dict={}
         self.grid_init = ['22222222222222222222212',
                           '22222292222911112244412',
@@ -157,6 +158,15 @@ class Game:
                           '22922777222144422211944',
                           '22222777229111111119222']
         self.maze=[  [int(j) for j in i] for i in self.grid_init]
+        b=[]
+        # for number, i in enumerate(self.maze,1):
+        #     for j in range(2):
+        #         temp_2=[]
+        #         for i,j in zip(self.maze[number-1],self.maze[number-1]):
+        #             temp_2.append(i)
+        #             temp_2.append(j)
+        #         b.append(temp_2)
+        # self.maze=b.copy()
         self.grid_m= [  [j for j in i.replace('4','9') ] for i in self.grid_init]
         self.size_grid= {
             'Дорога':'1',
@@ -193,14 +203,17 @@ class Game:
         self.cost_visited = {self.start: 0}
         self.visited = {self.start: None}
 
+        # self.bg = pg.image.load(  
+        #     r'c:\\Users\\Admin\\Desktop\\VS_code\\magic\\MagiCtr\\КР_Системный анализ информационных технологий\\Python-Dijkstra-BFS-A-star-master\\img\\2.png').convert()
+
         self.bg = pg.image.load(  
-            r'c:\\Users\\Admin\\Desktop\\VS_code\\magic\\MagiCtr\\КР_Системный анализ информационных технологий\\Python-Dijkstra-BFS-A-star-master\\img\\2.png').convert()
+            r'c:\\Users\\Дмитрий\\Desktop\\МАГИСТР\\MagiCtr\\КР_Системный анализ информационных технологий\\Python-Dijkstra-BFS-A-star-master\\img\\2.png').convert()
         # c:\\Users\\Дмитрий\\Desktop\\МАГИСТР\\MagiCtr\\КР_Системный анализ информационных технологий\\Python-Dijkstra-BFS-A-star-master\\img\\2.png
         #    C:\Users\Дмитрий\Desktop\МАГИСТР\MagiCtr\КР_Системный анализ информационных технологий\main_file.py
             # r'c:\\Users\\Admin\\Desktop\\VS_code\\magic\\MagiCtr\\КР_Системный анализ информационных технологий\\Python-Dijkstra-BFS-A-star-master\\img\\2.png').convert()
 
         self.bg = pg.transform.scale(
-            self.bg, (Game.cols * Game.TILE, Game.rows * Game.TILE))
+            self.bg, (Game.cols * (Game.TILE), Game.rows * (Game.TILE)))
 
         for y, row in enumerate(self.grid):
             for x, col in enumerate(row):
@@ -231,6 +244,7 @@ class Game:
         pass
 
     def get_next_nodes(self, x, y):
+        print(self.cols)
         check_next_node = lambda x, y: True if 0 <= x < self.cols and 0 <= y < self.rows else False
         ways = [-1, 0], [0, -1], [1, 0], [0, 1]
         return [(self.grid[y + dy][x + dx], (x + dx, y + dy)) for dx, dy in ways if check_next_node(x + dx, y + dy)]
@@ -565,6 +579,7 @@ if True:  # __name__ == "__main__"
     # maze = game.grid_init
     # maze=[  [int(j) for j in i] for i in maze]
     print(temp['message'])
+    game.maze=[  [int(j) for j in i] for i in game.grid_init]
     """
         КУСТ 
         КАМЕНЬ
@@ -575,6 +590,7 @@ if True:  # __name__ == "__main__"
     """
     
     while while_true:
+        print('game.grid_init',game.grid_init)
         game.activate_game()
         # if game.get_queue():
         #     cur_cost, cur_node =game.appent_goal()
@@ -600,6 +616,7 @@ if True:  # __name__ == "__main__"
         if mouse_pos:
             # visited = game.dijkstra(game.start, mouse_pos, game.graph) # start, goal, graph
             # visited = game.find_path_greedy(start=game.start, end=mouse_pos, grid=game.grid_m) # start, goal, graph
+            
             print(game.maze)
             shortest_distance, all_paths = bellman_ford(game.maze, game.start[::-1], mouse_pos[::-1])
             
