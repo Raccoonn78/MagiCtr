@@ -158,15 +158,7 @@ class Game:
                           '22922777222144422211944',
                           '22222777229111111119222']
         self.maze=[  [int(j) for j in i] for i in self.grid_init]
-        b=[]
-        # for number, i in enumerate(self.maze,1):
-        #     for j in range(2):
-        #         temp_2=[]
-        #         for i,j in zip(self.maze[number-1],self.maze[number-1]):
-        #             temp_2.append(i)
-        #             temp_2.append(j)
-        #         b.append(temp_2)
-        # self.maze=b.copy()
+     
         self.grid_m= [  [j for j in i.replace('4','9') ] for i in self.grid_init]
         self.size_grid= {
             'Дорога':'1',
@@ -207,7 +199,8 @@ class Game:
         #     r'c:\\Users\\Admin\\Desktop\\VS_code\\magic\\MagiCtr\\КР_Системный анализ информационных технологий\\Python-Dijkstra-BFS-A-star-master\\img\\2.png').convert()
 
         self.bg = pg.image.load(  
-            r'c:\\Users\\Дмитрий\\Desktop\\МАГИСТР\\MagiCtr\\КР_Системный анализ информационных технологий\\Python-Dijkstra-BFS-A-star-master\\img\\2.png').convert()
+            r'c:\\Users\\Admin\\Desktop\\VS_code\\magic\\MagiCtr\\КР_Системный анализ информационных технологий\\Python-Dijkstra-BFS-A-star-master\\img\\2.png').convert()
+        
         # c:\\Users\\Дмитрий\\Desktop\\МАГИСТР\\MagiCtr\\КР_Системный анализ информационных технологий\\Python-Dijkstra-BFS-A-star-master\\img\\2.png
         #    C:\Users\Дмитрий\Desktop\МАГИСТР\MagiCtr\КР_Системный анализ информационных технологий\main_file.py
             # r'c:\\Users\\Admin\\Desktop\\VS_code\\magic\\MagiCtr\\КР_Системный анализ информационных технологий\\Python-Dijkstra-BFS-A-star-master\\img\\2.png').convert()
@@ -567,7 +560,7 @@ class Menu:
 # menu.show_menu()
 
 
-if True:  # __name__ == "__main__"
+if True:  
     game = Game()
     while_true = False
     temp = game.custom_map()
@@ -576,9 +569,6 @@ if True:  # __name__ == "__main__"
         while_true = True
         game.create_graph()
         visited = {game.start: None}
-    # maze = game.grid_init
-    # maze=[  [int(j) for j in i] for i in maze]
-    print(temp['message'])
     game.maze=[  [int(j) for j in i] for i in game.grid_init]
     """
         КУСТ 
@@ -590,34 +580,15 @@ if True:  # __name__ == "__main__"
     """
     
     while while_true:
-        print('game.grid_init',game.grid_init)
-        game.activate_game()
-        # if game.get_queue():
-        #     cur_cost, cur_node =game.appent_goal()
-        #     if cur_node == game.get_goal():
-        #         game.set_queue()
-        #         continue
-        #     next_nodes = game.get_value_graph(cur_node)
-        #     for next_node in next_nodes:
-        #         neigh_cost, neigh_node = next_node
-        #         new_cost = game.get_cost_visited(cur_node) + neigh_cost
 
-        #         if neigh_node not in game.get_cost_visited() or new_cost < game.get_cost_visited(neigh_node):
-        #             priority = new_cost + game.heuristic(neigh_node, game.goal)
-        #             game.append_queue(priority, neigh_node)
-        #             game.set_cost_visited(neigh_node, new_cost)
-        #             game.set_visited(neigh_node, cur_node)
-        # draw path
-        
+        game.activate_game()
+      
         mouse_pos = game.get_click_mouse_pos('l') # выбор позиции 
         mouse_right = game.get_click_mouse_pos('r') # выбор позиции
         mouse_midle = game.get_click_mouse_pos('m') # выбор позиции
 
         if mouse_pos:
-            # visited = game.dijkstra(game.start, mouse_pos, game.graph) # start, goal, graph
-            # visited = game.find_path_greedy(start=game.start, end=mouse_pos, grid=game.grid_m) # start, goal, graph
             
-            print(game.maze)
             shortest_distance, all_paths = bellman_ford(game.maze, game.start[::-1], mouse_pos[::-1])
             
             visited={ all_paths[i][::-1]:all_paths[i+1][::-1]  for i in range(len(all_paths)-1) }
@@ -627,8 +598,7 @@ if True:  # __name__ == "__main__"
 
         path_head, path_segment = game.goal, game.goal
         while path_segment and path_segment in visited:
-            game.move_start(path_segment) # 
-            # print('path_segment',path_segment)
+            game.move_start(path_segment) 
             path_segment = game.get_visited(path_segment)
          
         game.idk(path_head)
