@@ -242,13 +242,7 @@ class CPU:
         self.test_operand()
         value = self.read_memory(self.operand)
         self.update_acc(self.acc & value)
-
-    def or_(self):
-        pass
-
-    def not_(self):
-        pass   
-
+ 
     def write_memory_d(self,x,y):
         self.write_memory(x,y)
 
@@ -284,8 +278,6 @@ class CPU:
     def add_m(self, x,y): # 16
         return x+y
 
-    def brz(self):
-        pass
     
     def brp(self):
         # IFF последняя операция оставила установленным флаг нуля,
