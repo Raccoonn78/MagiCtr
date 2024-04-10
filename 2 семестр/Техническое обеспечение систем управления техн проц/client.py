@@ -29,3 +29,4 @@ while True:
     time.sleep(2)
 # Закрытие сокета
 client_socket.close()
+

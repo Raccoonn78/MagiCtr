@@ -131,19 +131,19 @@ def PROTOCOL_MODBUS_TCP_SERVER(Rx_ADU):
     """Tx_ADU = MODBUS_TCP_SERVER_PROCESSING_ADU(Rx_ADU)"""
     Rx_MODBUS_address  = Rx_ADU[6]
     Rx_MODBUS_function = Rx_ADU[7]
-    print('Rx_ADU[0]',Rx_ADU[0])
-    print('Rx_ADU[1]',Rx_ADU[1])
-    print('Rx_ADU[2]',Rx_ADU[2])
-    print('Rx_ADU[3]',Rx_ADU[3])
-    print('Rx_ADU[4]',Rx_ADU[4])
-    print('Rx_ADU[5]',Rx_ADU[5])
-    print('Rx_ADU[6]',Rx_ADU[6])
-    print('Rx_ADU[7]',Rx_ADU[7])
-    print('Rx_ADU[8]',Rx_ADU[8])
-    print('Rx_ADU[9]',Rx_ADU[9])
-    print('Rx_ADU[10]',Rx_ADU[10])
-    print('Rx_ADU[11]',Rx_ADU[11])
-    print('len - Rx_ADU',len(Rx_ADU))
+    # print('Rx_ADU[0]',Rx_ADU[0])
+    # print('Rx_ADU[1]',Rx_ADU[1])
+    # print('Rx_ADU[2]',Rx_ADU[2])
+    # print('Rx_ADU[3]',Rx_ADU[3])
+    # print('Rx_ADU[4]',Rx_ADU[4])
+    # print('Rx_ADU[5]',Rx_ADU[5])
+    # print('Rx_ADU[6]',Rx_ADU[6])
+    # print('Rx_ADU[7]',Rx_ADU[7])
+    # print('Rx_ADU[8]',Rx_ADU[8])
+    # print('Rx_ADU[9]',Rx_ADU[9])
+    # print('Rx_ADU[10]',Rx_ADU[10])
+    # print('Rx_ADU[11]',Rx_ADU[11])
+    # print('len - Rx_ADU',len(Rx_ADU))
     if (Rx_MODBUS_address == MODBUS_ADDRESS): #Check MODBUS ADR
         if  (Rx_MODBUS_function == 3):
             Tx_ADU = MODBUS_TCP_SERVER_FUN_3(Rx_ADU)
