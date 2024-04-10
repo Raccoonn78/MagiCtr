@@ -178,6 +178,8 @@ PLC: 00 01 00 00 00 06 01 10 00 02 00 01 (Receive  byte HEX)
 import socket
 import struct
 import array
+import time
+from logger import logger
 
 def MODBUS_TCP_client_read_holding_register_uint16(IP_address = '127.0.0.1', TCP_port = 502, MODBUS_address = 1, Register_address = 0):
     """MODBUS TCP MASTER READ REGISTER FROM PLC"""
@@ -199,7 +201,7 @@ def MODBUS_TCP_client_read_holding_register_uint16(IP_address = '127.0.0.1', TCP
         Client_socket.__del__()
         return Rx_Register_value
     except:
-        print("ERROR: MODBUS_TCP_client_read_holding_register_uint16()")
+        logger.error("ERROR: MODBUS_TCP_client_read_holding_register_uint16()")
         Client_socket.close()
         Client_socket.__del__()
         return 0
@@ -226,7 +228,7 @@ def MODBUS_TCP_client_write_multiple_holding_register_uint16(IP_address = '127.0
         Client_socket.__del__()
         return
     except:
-        print("ERROR: MODBUS_TCP_client_write_multiple_holding_register_uint16()")
+        logger.error("ERROR: MODBUS_TCP_client_write_multiple_holding_register_uint16()")
         Client_socket.close()
         Client_socket.__del__()
     return
@@ -251,7 +253,7 @@ def MODBUS_TCP_client_read_input_register_int16(IP_address = '127.0.0.1', TCP_po
         Client_socket.__del__()
         return Rx_Register_value
     except:
-        print("ERROR: MODBUS_TCP_client_read_input_register_uint16()")
+        logger.error("ERROR: MODBUS_TCP_client_read_input_register_uint16()")
         Client_socket.close()
         Client_socket.__del__()
         return 0
@@ -276,7 +278,7 @@ def MODBUS_TCP_client_read_input_register_uint16(IP_address = '127.0.0.1', TCP_p
         Client_socket.__del__()
         return Rx_Register_value
     except:
-        print("ERROR: MODBUS_TCP_client_read_input_register_uint16()")
+        logger.error("ERROR: MODBUS_TCP_client_read_input_register_uint16()")
         Client_socket.close()
         Client_socket.__del__()
         return 0
@@ -342,12 +344,12 @@ class MODBUS_TCP_master(object):
             if (Error == False):
                 Register_value = Rx_Register_value
             else:
-                print("Error read holding register")
+                logger.error("Error read holding register")
                 print(Tx_ADU)
                 print(Rx_ADU)
                 Register_value = 0
         else:
-            print("Error read holding register")
+            logger.error("Error read holding register")
             print(Tx_ADU)
             print(Rx_ADU)
             Register_value = 0
@@ -393,12 +395,12 @@ class MODBUS_TCP_master(object):
                 Decode_float32 = struct.unpack(">f",struct.pack(">HH",Rx_Register_value2,Rx_Register_value1))
                 Register_value = Decode_float32[0]
             else:
-                print("Error read holding register")
+                logger.error("Error read holding register")
                 print(Tx_ADU)
                 print(Rx_ADU)
                 Register_value = 0.0
         else:
-            print("Error read holding register")
+            logger.error("Error read holding register")
             print(Tx_ADU)
             print(Rx_ADU)
             Register_value = 0.0
@@ -443,11 +445,11 @@ class MODBUS_TCP_master(object):
             Error = Error or (Rx_MODBUS_function != Tx_MODBUS_function)
             Error = Error or (Rx_Register_count  != Tx_Register_count )
             if (Error == True):
-                print("Error write multiple holding register")
+                logger.error("Error write multiple holding register")
                 print(Tx_ADU)
                 print(Rx_ADU)
         else:
-            print("Error write multiple holding register")
+            logger.error("Error write multiple holding register")
             print(Tx_ADU)
             print(Rx_ADU)
             Error = True
@@ -495,11 +497,11 @@ class MODBUS_TCP_master(object):
             Error = Error or (Rx_MODBUS_function != Tx_MODBUS_function)
             Error = Error or (Rx_Register_count  != Tx_Register_count )
             if (Error == True):
-                print("Error write multiple holding register")
+                logger.error("Error write multiple holding register")
                 print(Tx_ADU)
                 print(Rx_ADU)
         else:
-            print("Error write multiple holding register")
+            logger.error("Error write multiple holding register")
             print(Tx_ADU)
             print(Rx_ADU)
             Error = True
@@ -524,11 +526,11 @@ class MODBUS_TCP_master(object):
         if (Error == False):
             Error = (Rx_ADU != Tx_ADU)
             if (Error == True):
-                print("Error write single register")
+                logger.error("Error write single register")
                 print(Tx_ADU)
                 print(Rx_ADU)
         else:
-            print("Error write single register")
+            logger.error("Error write single register")
             print(Tx_ADU)
             print(Rx_ADU)
             Error = True
@@ -570,9 +572,9 @@ class MODBUS_TCP_master(object):
                     Reg_adr = int(Counter + Register_address) & 0xFFFF
                     self.MW[Reg_adr] = Register_value
             else:
-                print("Error read holding register")
+                logger.error("Error read holding register")
         else:
-                print("Error read holding register")
+                logger.error("Error read holding register")
         return
 
 def Two_uint16_to_float32(Register_value1, Register_value2):
@@ -580,17 +582,25 @@ def Two_uint16_to_float32(Register_value1, Register_value2):
     return tmp[0]
 
 def Unit_test():
+    logger.info('START CLIENT')
+    # time.sleep(2)
+    logger.info('connect...')
     PLC1 = MODBUS_TCP_master()
     PLC1.Start_TCP_client(IP_address = '127.0.0.1')
+    
     while True:
         MW7 = PLC1.Read_holding_register_uint16(Register_address = 7)
-        print(MW7)
+        print('>>',MW7)
         MW7 = (MW7 + 1) & 0xFFFF
         MW7 = PLC1.Write_multiple_holding_register_uint16(Register_address = 7, Register_value = MW7)
     PLC1.Stop_TCP_client()
 
 if (__name__ == '__main__'):
-    Unit_test()
+    try:
+        Unit_test()
+    except:logger.error('disconnect...')
+    logger.info('END')
+    # time.sleep(3)
 
 #  +---------+
 #  | GNU GPL |
@@ -611,4 +621,4 @@ if (__name__ == '__main__'):
 #
 # https://www.youtube.com/@DIY_PLC
 # https://github.com/DIYPLC
-
+ 

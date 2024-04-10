@@ -8,7 +8,8 @@ import socket #FOR TCP SERVER
 import select #FOR TCP SERVER
 import struct #FOR MODBUS PROTOCOL
 import array  #FOR MODBUS PROTOCOL
-
+from logger import logger
+import time
 IP_ADDRESS = "0.0.0.0"
 TCP_PORT = 502
 MODBUS_ADDRESS = 1
@@ -130,6 +131,19 @@ def PROTOCOL_MODBUS_TCP_SERVER(Rx_ADU):
     """Tx_ADU = MODBUS_TCP_SERVER_PROCESSING_ADU(Rx_ADU)"""
     Rx_MODBUS_address  = Rx_ADU[6]
     Rx_MODBUS_function = Rx_ADU[7]
+    print('Rx_ADU[0]',Rx_ADU[0])
+    print('Rx_ADU[1]',Rx_ADU[1])
+    print('Rx_ADU[2]',Rx_ADU[2])
+    print('Rx_ADU[3]',Rx_ADU[3])
+    print('Rx_ADU[4]',Rx_ADU[4])
+    print('Rx_ADU[5]',Rx_ADU[5])
+    print('Rx_ADU[6]',Rx_ADU[6])
+    print('Rx_ADU[7]',Rx_ADU[7])
+    print('Rx_ADU[8]',Rx_ADU[8])
+    print('Rx_ADU[9]',Rx_ADU[9])
+    print('Rx_ADU[10]',Rx_ADU[10])
+    print('Rx_ADU[11]',Rx_ADU[11])
+    print('len - Rx_ADU',len(Rx_ADU))
     if (Rx_MODBUS_address == MODBUS_ADDRESS): #Check MODBUS ADR
         if  (Rx_MODBUS_function == 3):
             Tx_ADU = MODBUS_TCP_SERVER_FUN_3(Rx_ADU)
@@ -151,7 +165,7 @@ def Task_MODBUS_TCP_SEREVER():
     server_socket.bind((IP_ADDRESS, TCP_PORT))
     server_socket.listen(8) #Number of TCP clients
     CONNECTION_LIST.append(server_socket)
-    print( "TCP server started")
+    logger.info( "TCP server started")
     while True:
         # Get the list sockets which are ready to be read through select
         read_sockets,write_sockets,error_sockets = select.select(CONNECTION_LIST,[],[])
@@ -171,8 +185,10 @@ def Task_MODBUS_TCP_SEREVER():
                     Rx_ADU = sock.recv(RECV_BUFFER)
                     #
                     Tx_ADU = PROTOCOL_MODBUS_TCP_SERVER(Rx_ADU)
+                     
                     if Rx_ADU:
                         sock.send(Tx_ADU)
+                        
                 # client disconnected, so remove from socket list
                 except:
                     #broadcast_data(sock, "Client (%s, %s) is offline" % addr)
@@ -184,8 +200,13 @@ def Task_MODBUS_TCP_SEREVER():
     return
 
 if __name__ == "__main__":
-    Debug_test_init_registers()
-    Task_MODBUS_TCP_SEREVER()
+    logger.info('START SERVER')
+    try:
+        Debug_test_init_registers()
+        Task_MODBUS_TCP_SEREVER()
+    except:print('disconnect...')
+    logger.info('END')
+    time.sleep(3)
 
 #  +---------+
 #  | GNU GPL |
