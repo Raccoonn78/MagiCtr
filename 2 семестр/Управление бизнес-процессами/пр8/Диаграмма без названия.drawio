@@ -1,0 +1,31 @@
+<mxfile host="app.diagrams.net" modified="2024-05-24T08:42:13.071Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36" etag="Z4n2pmDDau4flugWAGWx" version="24.4.7" type="device">
+  <diagram name="Страница — 1" id="36l1SXIHY1g3BPGjPh8u">
+    <mxGraphModel dx="474" dy="788" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="igoA0COV1_8HIBblf6hw-1" value="&lt;span style=&quot;font-size: 18pt; font-family: Calibri;&quot;&gt;Стратегическое&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;font-size: 18pt; font-family: Calibri;&quot;&gt;планирование&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="130" width="395" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="igoA0COV1_8HIBblf6hw-2" value="&lt;span style=&quot;font-size: 18pt; font-family: Calibri;&quot;&gt;Управление&lt;br/&gt;ресурсами&amp;nbsp;&amp;nbsp;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="290" width="395" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="igoA0COV1_8HIBblf6hw-3" value="&lt;span style=&quot;font-size: 18pt; font-family: Calibri;&quot;&gt;Контроль&lt;br/&gt;и оценка&amp;nbsp; &amp;nbsp;&amp;nbsp;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="450" width="395" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="igoA0COV1_8HIBblf6hw-4" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="igoA0COV1_8HIBblf6hw-1" target="igoA0COV1_8HIBblf6hw-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="650" y="340" as="sourcePoint" />
+            <mxPoint x="700" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="igoA0COV1_8HIBblf6hw-5" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="igoA0COV1_8HIBblf6hw-2" target="igoA0COV1_8HIBblf6hw-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="585" y="380" as="sourcePoint" />
+            <mxPoint x="595" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
