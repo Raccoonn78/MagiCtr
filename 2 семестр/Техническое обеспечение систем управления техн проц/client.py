@@ -5,7 +5,7 @@ import logging
 from logger_user import logs
 from decorator import my_decorator
 # Универсальная функция для распаковки ответа от сервера
-@my_decorator
+# @my_decorator
 def parse_modbus_response(response=0):
     # Распаковка MBAP заголовка
     transaction_id, protocol_id, length, unit_id = struct.unpack('>HHHB', response[:7])
@@ -27,11 +27,11 @@ def parse_modbus_response(response=0):
 
 
 # Создание сокета TCP для клиента
-@my_decorator
+# @my_decorator
 def connect_with_server():
     logs.info('Создание соедния')
     return socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-@my_decorator
+# @my_decorator
 def create_client():
 
     client_socket = connect_with_server()
