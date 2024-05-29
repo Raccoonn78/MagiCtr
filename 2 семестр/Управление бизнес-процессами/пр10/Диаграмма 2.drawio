@@ -1,0 +1,184 @@
+<mxfile host="app.diagrams.net" modified="2024-05-29T23:51:13.674Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36" etag="oJZT0b5ao6hHsM_rULwX" version="24.4.10" type="device">
+  <diagram name="Страница — 1" id="0VWmWIGgVYz2kL7qN_oK">
+    <mxGraphModel dx="1647" dy="848" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="4BiQWduUZzDlBl9thGa0-1" value="Управляющая компания" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="210" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-2" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="190" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-3" value="Отклик на вакансию" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="90" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-4" value="Сформировать требования к кандидату на вакантную должность" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="375" y="300" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-5" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="380" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-6" value="Разместить информацию о вакантной должности&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="375" y="490" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-7" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="584.5" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-8" value="Сформировать расписание собеседования" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="375" y="700" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-9" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="790" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-10" value="Провести собеседовани&lt;span style=&quot;color: rgba(0, 0, 0, 0); font-family: monospace; font-size: 0px; text-align: start; text-wrap: nowrap;&quot;&gt;%3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20value%3D%22%26amp%3Bnbsp%3B%22%20style%3D%22shape%3Dhexagon%3Bperimeter%3DhexagonPerimeter2%3BwhiteSpace%3Dwrap%3Bhtml%3D1%3BfixedSize%3D1%3B%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%22390%22%20y%3D%22790%22%20width%3D%22120%22%20height%3D%2280%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%3E&lt;/span&gt;е 1 этапа" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="375" y="900" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-11" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="980" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-12" value="Провести собеседовани&lt;span style=&quot;color: rgba(0, 0, 0, 0); font-family: monospace; font-size: 0px; text-align: start; text-wrap: nowrap;&quot;&gt;%3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20value%3D%22%26amp%3Bnbsp%3B%22%20style%3D%22shape%3Dhexagon%3Bperimeter%3DhexagonPerimeter2%3BwhiteSpace%3Dwrap%3Bhtml%3D1%3BfixedSize%3D1%3B%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%22390%22%20y%3D%22790%22%20width%3D%22120%22%20height%3D%2280%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%3E&lt;/span&gt;е 2 этапа" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="375" y="1090" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-13" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="1180" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-14" value="Выбрать кандидата" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="375" y="1290" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-15" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="1370" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-16" value="Согласовать кандидата на должность" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="375" y="1490" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-17" value="Провести собеседовани&lt;span style=&quot;color: rgba(0, 0, 0, 0); font-family: monospace; font-size: 0px; text-align: start; text-wrap: nowrap;&quot;&gt;%3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20value%3D%22%26amp%3Bnbsp%3B%22%20style%3D%22shape%3Dhexagon%3Bperimeter%3DhexagonPerimeter2%3BwhiteSpace%3Dwrap%3Bhtml%3D1%3BfixedSize%3D1%3B%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%22390%22%20y%3D%22790%22%20width%3D%22120%22%20height%3D%2280%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%3E&lt;/span&gt;е 1 этапа" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="720" y="420" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-18" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="735" y="505" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-19" value="Провести первичное собеседование" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="720" y="610" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-20" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="735" y="700" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-21" value="Оценить квалификацию кандидата" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="720" y="800" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-22" value="HR-директор" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="920" y="420" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-23" value="Провести собеседовани&lt;span style=&quot;color: rgba(0, 0, 0, 0); font-family: monospace; font-size: 0px; text-align: start; text-wrap: nowrap;&quot;&gt;%3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20value%3D%22%26amp%3Bnbsp%3B%22%20style%3D%22shape%3Dhexagon%3Bperimeter%3DhexagonPerimeter2%3BwhiteSpace%3Dwrap%3Bhtml%3D1%3BfixedSize%3D1%3B%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%22390%22%20y%3D%22790%22%20width%3D%22120%22%20height%3D%2280%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%3E&lt;/span&gt;е 2 этапа" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1190" y="410" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-24" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="1205" y="495" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-25" value="Провести техническое собеседование" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1190" y="600" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-26" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="1205" y="690" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-27" value="Оценить соответствие требованиям" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1190" y="790" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-28" value="руководитель отдела" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1390" y="410" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-29" value="Сформировать требования к кандидату" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1760" y="20" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-30" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="1775" y="105" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-31" value="Разместить информацию о вакансии" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1760" y="210" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-32" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="1775" y="300" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-33" value="Сформировать расписание собеседования" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1760" y="400" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-34" value="Кандидат" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1960" y="20" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-35" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="1775" y="495" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-36" value="Провести собеседование" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1760" y="595" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-37" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="1775" y="690" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-38" value="Выбрать кандидатуру" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1760" y="790" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-39" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="1775" y="870" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-40" value="Согласовать кандидатуру на должность" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1760" y="970" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-41" value="руководитель отдела" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1970" y="495" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-58" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="4BiQWduUZzDlBl9thGa0-42" target="4BiQWduUZzDlBl9thGa0-43">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-42" value="Провести собеседование" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2250" y="495" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-57" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="4BiQWduUZzDlBl9thGa0-43" target="4BiQWduUZzDlBl9thGa0-44">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-43" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="2265" y="575" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-56" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="4BiQWduUZzDlBl9thGa0-44" target="4BiQWduUZzDlBl9thGa0-45">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-44" value="Провести первичное собеседование" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2250" y="675" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-55" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="4BiQWduUZzDlBl9thGa0-45" target="4BiQWduUZzDlBl9thGa0-46">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-45" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="2265" y="755" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-54" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="4BiQWduUZzDlBl9thGa0-46" target="4BiQWduUZzDlBl9thGa0-47">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-46" value="Оценить квалификацию кандидата" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2250" y="855" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="4BiQWduUZzDlBl9thGa0-47" target="4BiQWduUZzDlBl9thGa0-48">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-47" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="2265" y="940" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="4BiQWduUZzDlBl9thGa0-48" target="4BiQWduUZzDlBl9thGa0-49">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-48" value="Провести техническое собеседование" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2250" y="1040" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-51" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4BiQWduUZzDlBl9thGa0-49" target="4BiQWduUZzDlBl9thGa0-50">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-49" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="2265" y="1120" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4BiQWduUZzDlBl9thGa0-50" value="Оценить соответствие требованиям" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2250" y="1220" width="150" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

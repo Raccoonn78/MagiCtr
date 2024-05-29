@@ -1,0 +1,193 @@
+<mxfile host="app.diagrams.net" modified="2024-05-29T23:40:32.425Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36" etag="15cCH1vZt1uNnyhQcDAH" version="24.4.10" type="device">
+  <diagram name="Страница — 1" id="fqAN2qr0vUIowjiEiFqe">
+    <mxGraphModel dx="1647" dy="848" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-1" value="Подать заявку на покупку мебели" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="410" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-2" value="" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="405" y="130" width="130" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-3" value="" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="630" y="455" width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-4" value="оформление заявки клиента на покупку мебели" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="410" y="240" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-5" value="" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="400" y="330" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-6" value="" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="400" y="540" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-10" value="Согласование цены заказа" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="410" y="450" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-12" value="Заключение договора купли-продажи" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="410" y="670" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-13" value="" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="400" y="760" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-14" value="Согласование условий и стоимости доставки" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="410" y="890" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-15" value="Организация доставки&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="400" y="990" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-16" value="оформление заявки клиента на покупку мебели&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1071" y="50" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-17" value="Менеджер отдела продаж" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="650" y="170" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-18" value="Менеджер договорного отдела" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="650" y="270" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-21" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="1061" y="200" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-22" value="Принять заявку от клиента&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1071" y="310" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-23" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="1061" y="390" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-24" value="Согласование цены заказа" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1320" y="50" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-25" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="1310" y="200" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-26" value="Рассчитать стоимость" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1320" y="310" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-27" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="1310" y="390" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-28" value="Заключение договора купли-продажи" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1540" y="50" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-29" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="1530" y="200" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-30" value="Подготовить договор" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1540" y="310" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-31" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="1530" y="390" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-32" value="Согласование условий и стоимости доставки" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1790" y="50" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-33" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="1780" y="200" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-34" value="Рассчитать стоимость доставки" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1790" y="310" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-35" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="1780" y="390" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-36" value="Организация доставки" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="2008" y="50" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-37" value="Назначить доставку" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="1998" y="200" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-38" value="Назначить доставку" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="2008" y="310" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-39" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="1998" y="390" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-40" value="Подать заявку" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="2420" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-41" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="2410" y="190" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-42" value="Оформление заявки и согласование цены и условий доставки" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="2420" y="300" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-43" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="2410" y="380" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-44" value="Клиент" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="2230" y="210" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-45" value="Управляющая компания" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="2590" y="205" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-46" value="Оформление заявки клиента на покупку мебели и согласование цены и условий доставки&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="2905" y="40" width="130" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-47" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="2900" y="200" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-48" value="Принять заявку от клиента" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="2910" y="310" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-49" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="2900" y="390" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-50" value="" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="2900" y="590" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-51" value="Внести данные в систему&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="2910" y="505" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-52" value="Рассчитать стоимость и условия доставки&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="2910" y="720" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-53" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="2900" y="820" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-54" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="3190" y="200" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-55" value="Подготовить договор с клиентом" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="3200" y="310" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-56" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="3190" y="390" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-57" value="&amp;nbsp;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="3190" y="590" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-58" value="Назначить доставку" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="3200" y="505" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MZhaSgQ48K_WatIRpWvt-61" value="Заключение договора купли-продажи и организация доставки" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="3190" y="40" width="130" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="DEKRZJOhjYYSQk1lnuV--1" value="Внести данные в систему" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1071" y="525" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="DEKRZJOhjYYSQk1lnuV--2" value="Согласовать цену с клиентом" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1320" y="525" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="DEKRZJOhjYYSQk1lnuV--3" value="Подписать договор с клиентом" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1540" y="525" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="DEKRZJOhjYYSQk1lnuV--4" value="Согласовать условия доставки с клиентом" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1790" y="530" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="DEKRZJOhjYYSQk1lnuV--5" value="Контролировать выполнение доставки" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2008" y="525" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="DEKRZJOhjYYSQk1lnuV--6" value="Заключение договора купли-продажи и организация доставки" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2395" y="505" width="170" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="DEKRZJOhjYYSQk1lnuV--7" value="Согласовать цену и условия с клиентом" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2910" y="940" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="DEKRZJOhjYYSQk1lnuV--8" value="Контролировать выполнение доставки" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="3200" y="710" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
