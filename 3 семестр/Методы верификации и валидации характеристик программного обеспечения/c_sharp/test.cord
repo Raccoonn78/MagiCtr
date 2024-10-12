@@ -1,0 +1,20 @@
+State Idle {
+    transition to SelectDestination on UserInput()
+}
+
+State SelectDestination {
+    transition to SelectTicketType on DestinationChosen()
+}
+
+State SelectTicketType {
+    transition to Payment on TicketTypeSelected()
+}
+
+State Payment {
+    transition to Complete on PaymentSuccess()
+    transition to Idle on PaymentFailure()
+}
+
+State Complete {
+    transition to Idle on TicketIssued()
+}
