@@ -4,7 +4,12 @@ from pymodbus.datastore import ModbusSlaveContext, ModbusServerContext, ModbusSe
 from threading import Thread
 import random
 from datetime import datetime
-
+#выводить журнал  + (реализовать верхние\нижние предупредительные и аварийные уставки)
+# добавить второго пользователя 
+# первый этаж - стартовый 
+# добавить звук 
+# лист дейсвтий пользователя 
+# журнал аварий
 # Создаем таблицу регистров (100 значений) с правильной инициализацией
 store = ModbusSlaveContext(
     di=ModbusSequentialDataBlock(0, [0] * 100),  # Дискретные входы
@@ -18,17 +23,24 @@ context = ModbusServerContext(slaves=store, single=True)
 
 # Таймеры отказа датчиков
 sensor_failure_timers = {
- '1': 20,
- '2': 25,
- '3': 30,
- '4': 35,
+ 'Вытяжка': 20,
+ 'Фильтр': 25,
+ 'Вод_кал': 30,
+ 'Вентилятор': 35,
      
 }
 address_error = {
- '1': 15,
- '2': 16,
- '3': 17,
- '4': 18,
+ 'Вытяжка': 15,
+ 'Фильтр': 16,
+ 'Вод_кал': 17,
+ 'Вентилятор': 18,
+     
+}
+address_error_status = {
+ 'Вытяжка': False,
+ 'Фильтр': False,
+ 'Вод_кал': False,
+ 'Вентилятор': False,
      
 }
 
@@ -46,7 +58,13 @@ sensor_failures = {
     "check_water_cal":60,
     "check_filtr":False
 }
+local_state= {}
 
+logs_actions= []
+logs_system=[]
+logs_errors =[]
+ 
+ 
 def main_function( humidity_decrease_counter ):
 
     while True:
@@ -56,20 +74,36 @@ def main_function( humidity_decrease_counter ):
         c_o_2 = store.getValues(3, 4, count=1)[0]           # CO2 (адрес 4)
         pressure = store.getValues(3, 5, count=1)[0]        # Давление (адрес 5)
         airflow_speed = store.getValues(3, 6, count=1)[0]        # Скорость воздушного потока (адрес 6)
+        
         check_fan = store.getValues(3, 11, count=1)[0]        # вкл выкл вент (адрес 11)
         check_speed_fan = store.getValues(3, 12, count=1)[0]        # мощность вент (адрес 12)
         check_water_cal = store.getValues(3, 13, count=1)[0]        # мощность вод кал (адрес 13)
         check_filtr = store.getValues(3, 14, count=1)[0]        # вкл выкл фильтр (адрес 14)
-        print(f'check_speed_fan {check_speed_fan}')
-        print(f'check_water_cal {check_water_cal}')
+
+        temperature_user  = store.getValues(3, 19, count=1)[0]        #  Установить температуру (адрес 19) # int
+        temperature_user_use  = store.getValues(3, 20, count=1)[0]        #  Установить температуру (адрес 20) # bool
+
+         
+        
+         
+
         sensor_failures['check_fan']= True  if isinstance(check_fan, int) else check_fan
         sensor_failures['check_speed_fan']=   check_speed_fan
         sensor_failures['check_water_cal']=    check_water_cal
         sensor_failures['check_filtr']= True  if isinstance(check_fan, int) else check_filtr
-        # sensor_failures['1']= True  if sensor_failure_timers['1']==0 else sensor_failure_timers['1']
-        # sensor_failures['2']= True  if sensor_failure_timers['2']==0 else sensor_failure_timers['2']
-        # sensor_failures['3']= True  if sensor_failure_timers['3']==0 else sensor_failure_timers['3']
-        # sensor_failures['4']= True  if sensor_failure_timers['4']==0 else sensor_failure_timers['4']
+        
+        local_state ={      'Вытяжка':                      sensor_failures['check_fan'],
+                            'мощность вент':                sensor_failures['check_speed_fan'],
+                            'мощность вод кал':             sensor_failures['check_water_cal'],
+                            'Вкл/Выкл фильтр':              sensor_failures['check_filtr'],
+                            'Time':str(datetime.now())
+                    }
+        if logs_system and temperature_user_use:
+            temp = logs_system[-1]
+            if list(temp.values()) != list(local_state.values()):
+                logs_system.append(local_state)
+        else:
+            logs_system.append(local_state)
         
 
         # Моделирование отказа датчиков
@@ -79,14 +113,22 @@ def main_function( humidity_decrease_counter ):
                 store.setValues(3, address_error[name], [False])  # Сигнал об отказе
             elif sensor_failure_timers[name] == 0:
                 store.setValues(3, address_error[name], [True])  # Сигнал об отказе
+                address_error_status[name]=True
+                logs_errors.append( address_error |  { 'Time':str(datetime.now())}  )
 
+        if temperature_user_use and temperature_user: # если пользовательская настройка
+            humidity =   humidity+ random.randint(1,7) if '+' == random.choice(["+","-"]) else humidity- random.randint(1,7)
+            temperature =temperature + random.randint(1,7) if '+' == random.choice(["+","-"])  else temperature - random.randint(1,7)
+            c_o_2 =   c_o_2 + random.randint(1,7)  if '+' == random.choice(["+","-"]) else  c_o_2 - random.randint(1,7)
+            pressure =pressure + random.randint(1,7)  if '+' == random.choice(["+","-"]) else pressure - random.randint(1,7)
+            airflow_speed =airflow_speed + random.randint(1,7) if '+' == random.choice(["+","-"]) else airflow_speed - random.randint(1,7)
+        else:
+            humidity =   humidity+ random.randint(1,7) if '+' == random.choice(["+","-"]) else humidity- random.randint(1,7)
+            temperature =temperature + random.randint(1,7) if '+' == random.choice(["+","-"])  else temperature - random.randint(1,7)
+            c_o_2 =   c_o_2 + random.randint(1,7)  if '+' == random.choice(["+","-"]) else  c_o_2 - random.randint(1,7)
+            pressure =pressure + random.randint(1,7)  if '+' == random.choice(["+","-"]) else pressure - random.randint(1,7)
+            airflow_speed =airflow_speed + random.randint(1,7) if '+' == random.choice(["+","-"]) else airflow_speed - random.randint(1,7)
 
-        humidity =   humidity+ random.randint(1,7) if '+' == random.choice(["+","-"]) else humidity- random.randint(1,7)
-        temperature =temperature + random.randint(1,7) if '+' == random.choice(["+","-"])  else temperature - random.randint(1,7)
-        c_o_2 =   c_o_2 + random.randint(1,7)  if '+' == random.choice(["+","-"]) else  c_o_2 - random.randint(1,7)
-        pressure =pressure + random.randint(1,7)  if '+' == random.choice(["+","-"]) else pressure - random.randint(1,7)
-        airflow_speed =airflow_speed + random.randint(1,7) if '+' == random.choice(["+","-"]) else airflow_speed - random.randint(1,7)
-     
 
         # Запись значений в Modbus
         store.setValues(3, 1, [humidity])           # Влажность (адрес 1)
@@ -98,6 +140,20 @@ def main_function( humidity_decrease_counter ):
         store.setValues(3, 12, [sensor_failures['check_speed_fan']])  # вкл выкл (адрес 12)
         store.setValues(3, 13, [sensor_failures['check_water_cal']])  # вкл выкл (адрес 13)
         store.setValues(3, 14, [sensor_failures['check_filtr']])  # вкл выкл (адрес 14)
+        
+        logs_system.append({
+                            'Влажность':                    humidity,
+                            'Температура':                  temperature,
+                            'CO2':                          c_o_2,
+                            'Давление':                     pressure,
+                            'Скорость воздушного потока':   airflow_speed,
+                            'Вытяжка':                      sensor_failures['check_fan'],
+                            'мощность вент':                sensor_failures['check_speed_fan'],
+                            'мощность вод кал':             sensor_failures['check_water_cal'],
+                            'вкл выкл фильтр':              sensor_failures['check_filtr'],
+                            'Time':str(datetime.now())
+                            })
+
 
         print(f"Влажность={humidity}%, Температура={temperature}°C, "
               f"CO2 {c_o_2}%, "
